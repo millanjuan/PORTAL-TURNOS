@@ -12,10 +12,10 @@ class UserController {
     try {
       const { typeidentity, identity } = req.body;
       const user = await UserService.getUserByIdentity(typeidentity, identity);
-      res.status(200).json(user);
+      res.status(200).json({ success: true, user: user });
     } catch (error) {
       console.error("Error fetching user by identity:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ success: false, error: "Internal server error" });
     }
   }
 
@@ -29,10 +29,10 @@ class UserController {
         throw new Error("No id provided");
       }
       const userProfile = await UserService.getUserProfile(id);
-      res.status(200).json(userProfile);
+      res.status(200).json({ success: true, profile: userProfile });
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ success: false, error: "Internal server error" });
     }
   }
 
@@ -47,10 +47,10 @@ class UserController {
         throw new Error("No id provided");
       }
       const updatedUser = await UserService.putUserProfile(id, updatedUserInfo);
-      res.status(200).json(updatedUser);
+      res.status(200).json({ success: true, user: updatedUser });
     } catch (error) {
       console.error("Error updating user profile:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ success: false, error: "Internal server error" });
     }
   }
 }

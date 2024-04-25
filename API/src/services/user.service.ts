@@ -24,7 +24,7 @@ class UserService {
         birthdate: existingUser.birthdate,
         verified: existingUser.verified,
         picture: existingUser.picture,
-        rol: existingUser.rol,
+        role: existingUser.role,
       };
 
       return newUser;
@@ -59,7 +59,7 @@ class UserService {
         birthdate: user.birthdate,
         verified: user.verified,
         picture: user.picture,
-        rol: user.rol,
+        role: user.role,
       };
 
       return userProfile;
