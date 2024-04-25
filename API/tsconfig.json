@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Compilar a JavaScript compatible con ECMAScript 6
+    "module": "commonjs", // Usar CommonJS para módulos
+    "strict": true, // Activar modo estricto de TypeScript
+    "esModuleInterop": true, // Habilitar interoperabilidad entre módulos ES y CommonJS
+    "skipLibCheck": true, // Omitir la comprobación de bibliotecas de definiciones de tipo
+    "forceConsistentCasingInFileNames": true, // Forzar consistencia en el nombre de archivos
+    "outDir": "./dist", // Directorio de salida para archivos JavaScript compilados
+    "rootDir": "./src" // Directorio de entrada para archivos TypeScript
+  },
+  "include": ["src/**/*.ts"], // Incluir archivos TypeScript en el directorio 'src' y subdirectorios
+  "exclude": ["node_modules"] // Excluir el directorio 'node_modules' de la compilación
+}

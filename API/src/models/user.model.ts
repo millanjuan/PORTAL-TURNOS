@@ -16,7 +16,7 @@ export interface IUser extends Document {
   birthdate: string;
   verified: boolean;
   picture?: string | null;
-  rol: string;
+  role: string;
 }
 
 const UserSchema: Schema = new Schema({
@@ -34,7 +34,7 @@ const UserSchema: Schema = new Schema({
   birthdate: { type: String, required: true },
   verified: { type: Boolean, required: true, default: false },
   picture: { type: String },
-  rol: { type: String, required: true, default: "patient" },
+  role: { type: String, required: true, default: "patient" },
 });
 
 UserSchema.pre<IUser>("save", function (next) {

@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
 import AuthService from "../services/auth.service";
+import CustomError from "../utils/errors/CustomError";
+import {
+  creatingError2,
+  validatingError2,
+} from "../utils/errors/errorsTypes/errorsTypes.auth";
 
 import dotenv from "dotenv";
 
@@ -12,8 +17,10 @@ class AuthController {
       const newUser = await AuthService.createUser(userData);
       res.status(201).json(newUser);
     } catch (error) {
-      console.error("Error creating user:", error);
-      res.status(500).json({ error: "Internal server error" });
+      if (error instanceof CustomError) {
+        console.error(creatingError2, error.message);
+        res.status(error.statusCode).json({ error: error.message });
+      }
     }
   }
   async validateUser(req: Request, res: Response) {
@@ -22,8 +29,10 @@ class AuthController {
       const authData = await AuthService.validateUser(username, password);
       res.status(200).json({ ...authData });
     } catch (error) {
-      console.error("Error validating user:", error);
-      res.status(500).json({ error: "Internal server error" });
+      if (error instanceof CustomError) {
+        console.error(validatingError2, error.message);
+        res.status(error.statusCode).json({ error: error.message });
+      }
     }
   }
 }
