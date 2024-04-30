@@ -77,7 +77,8 @@ class AuthService {
       }
 
       const payload: Partial<IUser> = {
-        _id: user.id,
+        _id: user._id,
+        id: user.id,
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
@@ -88,7 +89,7 @@ class AuthService {
         role: user.role,
       };
       const expiresIn = 8 * 60 * 60; // 8 hours
-      const token = jwt.sign({ user }, SECRET_KEY, {
+      const token = jwt.sign(payload, SECRET_KEY, {
         expiresIn,
       });
       const expirationTime = new Date(Date.now() + expiresIn * 1000);

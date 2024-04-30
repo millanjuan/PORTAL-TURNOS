@@ -15,9 +15,9 @@ const server = express();
 // MIDDLEWARES
 server.set("name", "API");
 server.use(cors());
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+/*server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
-server.use(cookieParser());
+server.use(cookieParser()); */
 server.use(morgan("dev"));
 server.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -33,7 +33,7 @@ server.use((req: Request, res: Response, next: NextFunction) => {
 //agregar server.use(rutas)
 server.use("/api", routes);
 
-// Error catching endware.
+// si hay algun error al hacer una solicitud lo devuelve
 server.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const status = (err as any).status || 500;
   const message = (err as any).message || err;
