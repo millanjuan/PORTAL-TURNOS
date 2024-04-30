@@ -88,7 +88,7 @@ class AuthService {
         verified: user.verified,
         role: user.role,
       };
-      const expiresIn = 8 * 60 * 60; // 8 hours
+      const expiresIn = 8 * 60 * 60; // 8 horas
       const token = jwt.sign(payload, SECRET_KEY, {
         expiresIn,
       });

@@ -11,6 +11,7 @@ export const tokenError: string = "No token provided";
 export const unauthorized: string = "Unauthorized";
 export const invalidToken: string = "Invalid token";
 
+//TODO Migrar erroes de appointments a un nuevo archivo errorTypes.appointment.ts
 //APPOINTMENT
 export const appointmentError: string = "Error creating appointments:";
 export const appointmentNotFound: string = "Appointment not found";

@@ -19,7 +19,9 @@ class AuthController {
     } catch (error) {
       if (error instanceof CustomError) {
         console.error(creatingError2, error.message);
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       }
     }
   }
@@ -31,7 +33,9 @@ class AuthController {
     } catch (error) {
       if (error instanceof CustomError) {
         console.error(validatingError2, error.message);
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       }
     }
   }

@@ -39,7 +39,7 @@ class AppointmentService {
 
       const isSameMonth =
         currentDate.getMonth() === month && currentDate.getFullYear() === year;
-
+      // TODO Fixear casos donde el usuario intenta crear turnos el ultimo dia del mes, deberia devolver un error
       let iterableDate =
         isSameMonth && currentDate.getDate() < endDate.getDate()
           ? addDays(currentDate, 1)
@@ -47,7 +47,7 @@ class AppointmentService {
 
       const tasks = [];
       let totalAppointments = 0;
-
+      //TODO Corregir algunos formatos de fechas y verificar error de generacion a las 6 de la mañana
       while (iterableDate <= endDate) {
         if (getDay(iterableDate) >= 1 && getDay(iterableDate) <= 5) {
           for (let hour = 8; hour < 16; hour++) {
