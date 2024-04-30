@@ -1,6 +1,7 @@
 import { User, IUser } from "../models/user.model";
 
 class UserService {
+  //TODO crear filtrado y paginado con mongoose
   async getUserByIdentity(
     typeidentity: string,
     identity: string
