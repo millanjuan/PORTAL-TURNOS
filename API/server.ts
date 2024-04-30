@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+//TODO 1)enviar success en todos los returns para manejar mejor desde el front las respuestas, 2)crear middlewares necesarios, 3)usar CustomError para errores customizables
+//TODO 4)simplificar rutas como fer comento en las primeras clases
 import "./src/db/db";
 
 const server = express();
