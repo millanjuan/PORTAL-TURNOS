@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import ProfessionalService from "../services/professional.service";
 import { IProfessional } from "../models/professional.model";
+import CustomError from "../utils/errors/CustomError";
 
 class ProfessionalController {
   async getProfessionals(req: Request, res: Response): Promise<void> {
@@ -9,7 +10,11 @@ class ProfessionalController {
       const professionals = await ProfessionalService.getProfessionals(query);
       res.status(200).json({ professionals });
     } catch (error) {
-      res.status(500).json({ error: "Error fetching professionals" });
+      if (error instanceof CustomError) {
+        res.status(error.statusCode).json({ error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 
@@ -20,8 +25,11 @@ class ProfessionalController {
 
       res.status(201).json(newProfessional);
     } catch (error) {
-      console.error("Error creating new professional:", error);
-      res.status(500).json({ error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res.status(error.statusCode).json({ error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 
@@ -33,35 +41,31 @@ class ProfessionalController {
         id,
         data
       );
-
-      if (!updatedProfessional) {
-        res.status(404).json({ error: "Professional not found" });
-        return;
-      }
-
       res.status(200).json(updatedProfessional);
     } catch (error) {
-      console.error("Error updating professional:", error);
-      res.status(500).json({ error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 
   async deleteProfessional(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const deletedProfessional = await ProfessionalService.deleteProfessional(
-        id
-      );
-
-      if (!deletedProfessional) {
-        res.status(404).json({ error: "Professional not found" });
-        return;
-      }
-
-      res.status(200).json(deletedProfessional);
+      await ProfessionalService.deleteProfessional(id);
+      res.status(200).json({ success: true });
     } catch (error) {
-      console.error("Error deleting professional:", error);
-      res.status(500).json({ error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 }

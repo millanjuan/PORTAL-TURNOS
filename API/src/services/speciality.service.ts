@@ -1,4 +1,6 @@
 import { Speciality, ISpeciality } from "../models/speciality.model";
+import CustomError from "../utils/errors/CustomError";
+import { specialityErrors } from "../utils/errors/errorsTypes/errors.speciality";
 
 class SpecialityService {
   async getAllSpecialities(): Promise<ISpeciality[]> {
@@ -6,7 +8,6 @@ class SpecialityService {
       const specialities = await Speciality.find();
       return specialities;
     } catch (error) {
-      console.error("Error fetching specialities:", error);
       throw error;
     }
   }
@@ -21,38 +22,45 @@ class SpecialityService {
         professionals,
       });
 
-      const savedSpeciality = await newSpeciality.save();
-      return savedSpeciality;
+      if (!newSpeciality) {
+        throw new CustomError(specialityErrors.CREATE_ERROR, 400);
+      }
+
+      await newSpeciality.save();
+      return newSpeciality;
     } catch (error) {
-      console.error("Error creating new speciality:", error);
       throw error;
     }
   }
   async updateSpeciality(
     specialityId: string,
     data: Partial<ISpeciality>
-  ): Promise<ISpeciality | null> {
+  ): Promise<ISpeciality> {
     try {
       const speciality = await Speciality.findByIdAndUpdate(
         specialityId,
         data,
         { new: true }
       );
-      return speciality || null;
+      if (!speciality) {
+        throw new CustomError(specialityErrors.NOT_FOUND, 404);
+      }
+      return speciality;
     } catch (error) {
-      console.error("Error updating speciality:", error);
       throw error;
     }
   }
 
-  async deleteSpeciality(specialityId: string): Promise<ISpeciality | null> {
+  async deleteSpeciality(specialityId: string): Promise<ISpeciality> {
     try {
       const deletedSpeciality = await Speciality.findByIdAndDelete(
         specialityId
       );
-      return deletedSpeciality || null;
+      if (!deletedSpeciality) {
+        throw new CustomError(specialityErrors.NOT_FOUND, 404);
+      }
+      return deletedSpeciality;
     } catch (error) {
-      console.error("Error deleting professional:", error);
       throw error;
     }
   }

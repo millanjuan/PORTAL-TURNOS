@@ -4,13 +4,7 @@ import {
 } from "../utils/interfaces/appointment.interface";
 import { Appointment, IAppointment } from "../models/appointment.model";
 import CustomError from "../utils/errors/CustomError";
-import {
-  appointmentError,
-  appointmentNotFound,
-  cancelError,
-  errorFetchingAppointment,
-  schuddleError,
-} from "../utils/errors/errorsTypes/errorsTypes.auth";
+import { appointmentErrors } from "../utils/errors/errorsTypes/errors.appointment";
 import {
   format,
   addDays,
@@ -48,6 +42,7 @@ class AppointmentService {
       const tasks = [];
       let totalAppointments = 0;
       //TODO Corregir algunos formatos de fechas y verificar error de generacion a las 6 de la mañana
+      //!! BUSCAR OTRA MANERA(ojala)
       while (iterableDate <= endDate) {
         if (getDay(iterableDate) >= 1 && getDay(iterableDate) <= 5) {
           for (let hour = 8; hour < 16; hour++) {
@@ -99,8 +94,8 @@ class AppointmentService {
       await Promise.all(tasks);
       return totalAppointments;
     } catch (error) {
-      console.error(appointmentError, error);
-      throw new CustomError(appointmentError, 500);
+      console.error(appointmentErrors.CREATING_ERROR, error);
+      throw new CustomError(appointmentErrors.CREATING_ERROR, 500);
     }
   }
 
@@ -122,8 +117,8 @@ class AppointmentService {
 
       return activeDates;
     } catch (error) {
-      console.error(errorFetchingAppointment, error);
-      throw new CustomError(errorFetchingAppointment, 500);
+      console.error(appointmentErrors.FETCHING_ERROR, error);
+      throw new CustomError(appointmentErrors.FETCHING_ERROR, 500);
     }
   }
 
@@ -154,14 +149,14 @@ class AppointmentService {
         }));
         return formattedAppointments;
       } else {
-        throw new CustomError(appointmentNotFound, 404);
+        throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
       } else {
-        console.error(errorFetchingAppointment, error);
-        throw new CustomError(errorFetchingAppointment, 500);
+        console.error(appointmentErrors.FETCHING_ERROR, error);
+        throw new CustomError(appointmentErrors.FETCHING_ERROR, 500);
       }
     }
   }
@@ -177,14 +172,14 @@ class AppointmentService {
         schuddle.active = true;
         await schuddle.save();
       } else {
-        throw new CustomError(appointmentNotFound, 404);
+        throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
       } else {
-        console.error(schuddleError, error);
-        throw new CustomError(schuddleError, 500);
+        console.error(appointmentErrors.SCHUDDLE_ERROR, error);
+        throw new CustomError(appointmentErrors.SCHUDDLE_ERROR, 500);
       }
     }
   }
@@ -202,14 +197,14 @@ class AppointmentService {
         appointment.active = false;
         await appointment.save();
       } else {
-        throw new CustomError(appointmentNotFound, 404);
+        throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
       } else {
-        console.error(cancelError, error);
-        throw new CustomError(cancelError, 500);
+        console.error(appointmentErrors.CANCEL_ERROR, error);
+        throw new CustomError(appointmentErrors.CANCEL_ERROR, 500);
       }
     }
   }

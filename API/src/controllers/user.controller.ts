@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
+import CustomError from "../utils/errors/CustomError";
+import { userErrors } from "../utils/errors/errorsTypes/errors.user";
 
 interface AuthenticatedRequest extends Request {
   user?: {
@@ -14,8 +16,13 @@ class UserController {
       const user = await UserService.getUserByIdentity(typeidentity, identity);
       res.status(200).json({ success: true, user: user });
     } catch (error) {
-      console.error("Error fetching user by identity:", error);
-      res.status(500).json({ success: false, error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 
@@ -26,13 +33,18 @@ class UserController {
     try {
       const id = req.user?.id;
       if (!id) {
-        throw new Error("No id provided");
+        throw new CustomError(userErrors.ID_ERROR, 400);
       }
       const userProfile = await UserService.getUserProfile(id);
       res.status(200).json({ success: true, profile: userProfile });
     } catch (error) {
-      console.error("Error fetching user profile:", error);
-      res.status(500).json({ success: false, error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 
@@ -44,13 +56,18 @@ class UserController {
       const id = req.user?.id;
       const updatedUserInfo = req.body;
       if (!id) {
-        throw new Error("No id provided");
+        throw new CustomError(userErrors.ID_ERROR, 400);
       }
       const updatedUser = await UserService.putUserProfile(id, updatedUserInfo);
       res.status(200).json({ success: true, user: updatedUser });
     } catch (error) {
-      console.error("Error updating user profile:", error);
-      res.status(500).json({ success: false, error: "Internal server error" });
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ import {
   unauthorized,
   tokenError,
   invalidToken,
-} from "../utils/errors/errorsTypes/errorsTypes.auth";
+} from "../utils/errors/errorsTypes/errors.auth";
 config();
 
 interface AuthRequest extends Request {

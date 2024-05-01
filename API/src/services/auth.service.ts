@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 import { User, IUser } from "../models/user.model";
 import CustomError from "../utils/errors/CustomError";
 import {
-  invalidCredentials,
+  INVALID_CREDENTIALS,
   creatingError,
   creatingError2,
   validatingError,
   validatingError2,
   alreadyExists,
   emailExist,
-} from "../utils/errors/errorsTypes/errorsTypes.auth";
+} from "../utils/errors/errorsTypes/errors.auth";
 import { config } from "dotenv";
 config();
 
@@ -73,7 +73,7 @@ class AuthService {
       const user = await User.findOne({ username });
 
       if (!user || !bcryptjs.compareSync(password, user.password)) {
-        throw new CustomError(invalidCredentials, 401);
+        throw new CustomError(INVALID_CREDENTIALS, 401);
       }
 
       const payload: Partial<IUser> = {

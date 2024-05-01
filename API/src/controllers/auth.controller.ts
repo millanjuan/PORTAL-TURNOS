@@ -4,7 +4,7 @@ import CustomError from "../utils/errors/CustomError";
 import {
   creatingError2,
   validatingError2,
-} from "../utils/errors/errorsTypes/errorsTypes.auth";
+} from "../utils/errors/errorsTypes/errors.auth";
 
 import dotenv from "dotenv";
 

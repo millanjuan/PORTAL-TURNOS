@@ -1,11 +1,7 @@
 import { Professional, IProfessional } from "../models/professional.model";
-
-interface GetProfessionalsParams {
-  page?: number;
-  pageSize?: number;
-  nameFilter?: string;
-  specialityId?: string;
-}
+import { professionalErrors } from "../utils/errors/errorsTypes/errors.professional";
+import CustomError from "../utils/errors/CustomError";
+import { GetProfessionalsParams } from "../utils/interfaces/professional.interface";
 
 class ProfessionalService {
   async getProfessionals({
@@ -22,7 +18,7 @@ class ProfessionalService {
       const parsedPageSize = Math.max(1, pageSize);
 
       let filter: any = {};
-
+      //todo verificar simplificaciones
       if (nameFilter) {
         filter.$or = [
           { firstname: { $regex: new RegExp(nameFilter, "i") } },
@@ -46,7 +42,6 @@ class ProfessionalService {
 
       return { total, professionals };
     } catch (error) {
-      console.error("Error fetching professionals:", error);
       throw error;
     }
   }
@@ -64,7 +59,6 @@ class ProfessionalService {
       const savedProfessional = await newProfessional.save();
       return savedProfessional;
     } catch (error) {
-      console.error("Error creating new professional:", error);
       throw error;
     }
   }
@@ -72,16 +66,18 @@ class ProfessionalService {
   async updateProfessional(
     professionalId: string,
     data: Partial<IProfessional>
-  ): Promise<IProfessional | null> {
+  ): Promise<IProfessional> {
     try {
       const professional = await Professional.findByIdAndUpdate(
         professionalId,
         data,
         { new: true }
       );
-      return professional || null;
+      if (!professional) {
+        throw new CustomError(professionalErrors.NOT_FOUND, 404);
+      }
+      return professional;
     } catch (error) {
-      console.error("Error updating professional:", error);
       throw error;
     }
   }
@@ -93,9 +89,11 @@ class ProfessionalService {
       const deletedProfessional = await Professional.findByIdAndDelete(
         professionalId
       );
-      return deletedProfessional || null;
+      if (!deletedProfessional) {
+        throw new CustomError(professionalErrors.NOT_FOUND, 404);
+      }
+      return deletedProfessional;
     } catch (error) {
-      console.error("Error deleting professional:", error);
       throw error;
     }
   }

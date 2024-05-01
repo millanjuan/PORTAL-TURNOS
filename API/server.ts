@@ -21,6 +21,7 @@ server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
+//TODO verificar cabeceras
 server.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -44,5 +45,5 @@ server.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
-  console.log("Up on running");
+  console.log("Up and running");
 });

@@ -1,4 +1,6 @@
 import { User, IUser } from "../models/user.model";
+import CustomError from "../utils/errors/CustomError";
+import { userErrors } from "../utils/errors/errorsTypes/errors.user";
 
 class UserService {
   //TODO crear filtrado y paginado con mongoose
@@ -9,7 +11,7 @@ class UserService {
     try {
       const existingUser = await User.findOne({ typeidentity, identity });
       if (!existingUser) {
-        throw new Error("User not found");
+        throw new CustomError(userErrors.NOT_FOUND, 404);
       }
 
       const newUser: Partial<IUser> = {
@@ -30,7 +32,6 @@ class UserService {
 
       return newUser;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
@@ -38,7 +39,6 @@ class UserService {
     try {
       const user = await User.findById(id, {
         select: {
-          _id: 0,
           email: 0,
           password: 0,
           username: 0,
@@ -46,7 +46,7 @@ class UserService {
       });
 
       if (!user) {
-        throw new Error("User not found.");
+        throw new CustomError(userErrors.NOT_FOUND, 404);
       }
 
       const userProfile: Partial<IUser> = {
@@ -65,7 +65,6 @@ class UserService {
 
       return userProfile;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
@@ -76,12 +75,11 @@ class UserService {
       });
 
       if (!user) {
-        throw new Error("User not found.");
+        throw new CustomError(userErrors.NOT_FOUND, 404);
       }
 
       return user;
     } catch (error) {
-      console.error("Error updating user profile:", error);
       throw error;
     }
   }

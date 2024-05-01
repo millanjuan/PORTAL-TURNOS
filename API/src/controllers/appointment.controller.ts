@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import AppointmentService from "../services/appointment.service";
 import { IMonthlyAppointments } from "../utils/interfaces/appointment.interface";
 import CustomError from "../utils/errors/CustomError";
-import { appointmentError } from "../utils/errors/errorsTypes/errorsTypes.auth";
-
+import { appointmentErrors } from "../utils/errors/errorsTypes/errors.appointment";
 class AppointmentController {
   async createMonthlyAppointments(req: Request, res: Response) {
     try {
@@ -20,7 +19,7 @@ class AppointmentController {
       }
     } catch (error) {
       if (error instanceof CustomError) {
-        console.error(appointmentError, error.message);
+        console.error(appointmentErrors.CREATING_ERROR, error.message);
         res.status(error.statusCode).json({ error: error.message });
       } else {
         res.status(500).json(error);
