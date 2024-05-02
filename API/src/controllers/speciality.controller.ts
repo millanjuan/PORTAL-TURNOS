@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import SpecialityService from "../services/speciality.service";
 import { ISpeciality } from "../models/speciality.model";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 
 class SpecialityController {
   async getAllSpecialities(req: Request, res: Response): Promise<void> {

@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
-import {
-  unauthorized,
-  tokenError,
-  invalidToken,
-} from "../utils/errors/errorsTypes/errors.auth";
+import { authErrors } from "../utils/errors/errorsTypes/errors.auth";
 config();
 
 interface AuthRequest extends Request {
@@ -22,12 +18,16 @@ export const verifyToken = (
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ success: false, error: tokenError });
+    return res
+      .status(401)
+      .json({ success: false, error: authErrors.TOKEN_ERROR });
   }
 
   jwt.verify(token, SECRET_KEY as string, (err, user) => {
     if (err) {
-      return res.status(403).json({ success: false, error: invalidToken });
+      return res
+        .status(403)
+        .json({ success: false, error: authErrors.INVALID_TOKEN });
     }
     req.user = user;
     next();
@@ -42,7 +42,9 @@ export const verifyAdmin = (
   const user = req.user;
 
   if (!user || user.role !== "admin") {
-    return res.status(403).json({ success: false, error: unauthorized });
+    return res
+      .status(403)
+      .json({ success: false, error: authErrors.UNAUTHORIZED });
   }
 
   next();

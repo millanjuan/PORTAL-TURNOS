@@ -5,11 +5,11 @@ import morgan from "morgan";
 import cors from "cors";
 import routes from "./src/routes";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-//TODO 1)enviar success en todos los returns para manejar mejor desde el front las respuestas, 2)crear middlewares necesarios, 3)usar CustomError para errores customizables
-//TODO 4)simplificar rutas como fer comento en las primeras clases
+//TODO 1)crear middlewares necesarios,
+//TODO 2)simplificar rutas como fer comento en las primeras clases
+//TODO 3) parsear a minuscula los datos que ingresan necesarios
 import "./src/db/db";
 
 const server = express();
@@ -21,9 +21,8 @@ server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
-//TODO verificar cabeceras
 server.use((req: Request, res: Response, next: NextFunction) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173/");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",

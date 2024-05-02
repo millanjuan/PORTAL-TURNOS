@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import ProfessionalService from "../services/professional.service";
 import { IProfessional } from "../models/professional.model";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 
 class ProfessionalController {
   async getProfessionals(req: Request, res: Response): Promise<void> {

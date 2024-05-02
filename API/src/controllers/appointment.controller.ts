@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import AppointmentService from "../services/appointment.service";
 import { IMonthlyAppointments } from "../utils/interfaces/appointment.interface";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 import { appointmentErrors } from "../utils/errors/errorsTypes/errors.appointment";
 class AppointmentController {
   async createMonthlyAppointments(req: Request, res: Response) {
@@ -20,9 +20,11 @@ class AppointmentController {
     } catch (error) {
       if (error instanceof CustomError) {
         console.error(appointmentErrors.CREATING_ERROR, error.message);
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({ success: false, error });
       }
     }
   }
@@ -40,9 +42,11 @@ class AppointmentController {
         .json({ success: true, appointments: appointments });
     } catch (error) {
       if (error instanceof CustomError) {
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({ success: false, error });
       }
     }
   }
@@ -59,9 +63,11 @@ class AppointmentController {
         .json({ success: true, appointments: appointments });
     } catch (error) {
       if (error instanceof CustomError) {
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({ success: false, error });
       }
     }
   }
@@ -78,9 +84,11 @@ class AppointmentController {
         .json({ success: true, schuddledAppointment: schuddledAppointment });
     } catch (error) {
       if (error instanceof CustomError) {
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({ success: false, error });
       }
     }
   }
@@ -89,18 +97,18 @@ class AppointmentController {
     try {
       const { userId, appointmentId } = req.body;
 
-      const canceledAppointment = await AppointmentService.cancelAppointment({
+      await AppointmentService.cancelAppointment({
         userId,
         appointmentId,
       });
-      res
-        .status(200)
-        .json({ success: true, canceledAppointment: canceledAppointment });
+      res.status(200).json({ success: true });
     } catch (error) {
       if (error instanceof CustomError) {
-        res.status(error.statusCode).json({ error: error.message });
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({ success: false, error });
       }
     }
   }

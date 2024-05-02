@@ -4,6 +4,8 @@ import { IProfessional } from "./professional.model";
 
 export interface IAppointment extends Document {
   date: Date;
+  year: number;
+  month: number;
   startTime: Date;
   endTime: Date;
   active: boolean;
@@ -13,6 +15,8 @@ export interface IAppointment extends Document {
 
 const AppointmentSchema: Schema = new Schema({
   date: { type: Date, required: true },
+  year: { type: Number, required: true },
+  month: { type: Number, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   active: { type: Boolean, required: true, default: false },

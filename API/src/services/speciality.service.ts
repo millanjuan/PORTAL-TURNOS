@@ -1,5 +1,5 @@
 import { Speciality, ISpeciality } from "../models/speciality.model";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 import { specialityErrors } from "../utils/errors/errorsTypes/errors.speciality";
 
 class SpecialityService {

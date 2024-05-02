@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 import { userErrors } from "../utils/errors/errorsTypes/errors.user";
 
 interface AuthenticatedRequest extends Request {

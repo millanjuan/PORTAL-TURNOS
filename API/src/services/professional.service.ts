@@ -1,6 +1,6 @@
 import { Professional, IProfessional } from "../models/professional.model";
 import { professionalErrors } from "../utils/errors/errorsTypes/errors.professional";
-import CustomError from "../utils/errors/CustomError";
+import { CustomError } from "../utils/classes/classes";
 import { GetProfessionalsParams } from "../utils/interfaces/professional.interface";
 
 class ProfessionalService {

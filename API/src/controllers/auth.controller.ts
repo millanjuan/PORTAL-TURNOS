@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import AuthService from "../services/auth.service";
-import CustomError from "../utils/errors/CustomError";
-import {
-  creatingError2,
-  validatingError2,
-} from "../utils/errors/errorsTypes/errors.auth";
+import { CustomError } from "../utils/classes/classes";
 
 import dotenv from "dotenv";
 
@@ -15,13 +11,16 @@ class AuthController {
     try {
       const userData = req.body;
       const newUser = await AuthService.createUser(userData);
-      res.status(201).json(newUser);
+      if (newUser) {
+        res.status(201).json({ success: true, user: newUser });
+      }
     } catch (error) {
       if (error instanceof CustomError) {
-        console.error(creatingError2, error.message);
         res
           .status(error.statusCode)
           .json({ success: false, error: error.message });
+      } else {
+        return res.status(500).json({ success: false, error });
       }
     }
   }
@@ -29,13 +28,14 @@ class AuthController {
     const { username, password } = req.body;
     try {
       const authData = await AuthService.validateUser(username, password);
-      res.status(200).json({ ...authData });
+      res.status(200).json({ success: true, ...authData });
     } catch (error) {
       if (error instanceof CustomError) {
-        console.error(validatingError2, error.message);
         res
           .status(error.statusCode)
           .json({ success: false, error: error.message });
+      } else {
+        return res.status(500).json({ success: false, error });
       }
     }
   }

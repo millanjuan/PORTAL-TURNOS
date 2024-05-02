@@ -1,16 +1,8 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User, IUser } from "../models/user.model";
-import CustomError from "../utils/errors/CustomError";
-import {
-  INVALID_CREDENTIALS,
-  creatingError,
-  creatingError2,
-  validatingError,
-  validatingError2,
-  alreadyExists,
-  emailExist,
-} from "../utils/errors/errorsTypes/errors.auth";
+import { CustomError } from "../utils/classes/classes";
+import { authErrors } from "../utils/errors/errorsTypes/errors.auth";
 import { config } from "dotenv";
 config();
 
@@ -32,14 +24,16 @@ class AuthService {
       birthdate,
     } = userData;
     try {
-      const existingEmail = await User.findOne({ email });
-      if (existingEmail) {
-        throw new CustomError(emailExist, 409);
-      }
+      const existingUser = await User.findOne({
+        $or: [{ email }, { username }],
+      });
 
-      const existingUsername = await User.findOne({ username });
-      if (existingUsername) {
-        throw new CustomError(alreadyExists, 409);
+      if (existingUser) {
+        if (existingUser.email === email) {
+          throw new CustomError(authErrors.EMAIL_EXISTS, 409);
+        } else {
+          throw new CustomError(authErrors.USER_EXISTS, 409);
+        }
       }
 
       const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -48,23 +42,26 @@ class AuthService {
         email: email.toLowerCase(),
         username,
         password: hashedPassword,
-        firstname,
-        lastname,
+        firstname: firstname.toLowerCase(),
+        lastname: lastname.toLowerCase(),
         identity,
-        typeidentity,
+        typeidentity: typeidentity.toUpperCase(),
         birthdate,
       });
-
       await newUser.save();
-
-      return { success: true, newUser };
+      const payload: Partial<IUser> = {
+        _id: newUser._id,
+        email: newUser.email,
+        username: newUser.username,
+        firstname: newUser.firstname,
+        lastname: newUser.lastname,
+        identity: newUser.identity,
+        typeidentity: newUser.typeidentity,
+        birthdate: newUser.birthdate,
+      };
+      return payload;
     } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      } else {
-        console.error(creatingError2, error); // con :
-        throw new CustomError(creatingError, 500); //sin :
-      }
+      throw error;
     }
   }
 
@@ -73,12 +70,11 @@ class AuthService {
       const user = await User.findOne({ username });
 
       if (!user || !bcryptjs.compareSync(password, user.password)) {
-        throw new CustomError(INVALID_CREDENTIALS, 401);
+        throw new CustomError(authErrors.INVALID_CREDENTIALS, 401);
       }
 
       const payload: Partial<IUser> = {
         _id: user._id,
-        id: user.id,
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
@@ -94,14 +90,9 @@ class AuthService {
       });
       const expirationTime = new Date(Date.now() + expiresIn * 1000);
 
-      return { success: true, token, expirationTime, userData: payload };
+      return { token, expirationTime, userData: payload };
     } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      } else {
-        console.error(validatingError2, error);
-        throw new CustomError(validatingError, 500);
-      }
+      throw error;
     }
   }
 }
