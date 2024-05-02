@@ -25,13 +25,11 @@ class AppointmentService {
       if (!existingAppointments) {
         const startDate = new Date(year, month);
         const endDate = endOfMonth(startDate);
-
         const appointments = [];
 
         for (let day = startDate.getDate(); day <= endDate.getDate(); day++) {
           const currentDate = new Date(year, month, day);
           const dayOfWeek = currentDate.getDay();
-
           if (WEEKDAYS.includes(dayOfWeek)) {
             let currentStartTime = new Date(
               year,
@@ -41,7 +39,6 @@ class AppointmentService {
               START_MINUTES
             );
             const endTime = new Date(year, month, day, END_HOUR, END_MINUTES);
-
             while (
               currentStartTime < endTime &&
               currentStartTime.getHours() < END_HOUR
@@ -55,12 +52,10 @@ class AppointmentService {
                 active: false,
                 professional: professionalId,
               });
-
               currentStartTime.setMinutes(currentStartTime.getMinutes() + 30);
             }
           }
         }
-
         const result = await Appointment.insertMany(appointments);
         return result.length;
       } else return null;
