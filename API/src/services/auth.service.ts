@@ -45,7 +45,7 @@ class AuthService {
         firstname: firstname.toLowerCase(),
         lastname: lastname.toLowerCase(),
         identity,
-        typeidentity: typeidentity.toUpperCase(),
+        typeidentity: typeidentity.toLowerCase(),
         birthdate,
       });
       await newUser.save();

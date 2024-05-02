@@ -21,8 +21,8 @@ class ProfessionalService {
       //todo verificar simplificaciones
       if (nameFilter) {
         filter.$or = [
-          { firstname: { $regex: new RegExp(nameFilter, "i") } },
-          { lastname: { $regex: new RegExp(nameFilter, "i") } },
+          { firstname: { $regex: nameFilter, $options: "i" } },
+          { lastname: { $regex: nameFilter, $options: "i" } },
         ];
       }
 

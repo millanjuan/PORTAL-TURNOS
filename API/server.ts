@@ -8,8 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //TODO 1)crear middlewares necesarios,
-//TODO 2)simplificar rutas como fer comento en las primeras clases
-//TODO 3) parsear a minuscula los datos que ingresan necesarios
+//TODO 2) parsear a minuscula los datos que ingresan necesarios
 import "./src/db/db";
 
 const server = express();

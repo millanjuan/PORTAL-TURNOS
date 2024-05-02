@@ -21,33 +21,32 @@ class AppointmentService {
     professionalId,
   }: IMonthlyAppointments): Promise<number | null> {
     try {
-      const startDate = new Date(year, month);
-      const endDate = endOfMonth(startDate);
-      let totalAppointments = 0;
+      const existingAppointments = await Appointment.findOne({ month, year });
+      if (!existingAppointments) {
+        const startDate = new Date(year, month);
+        const endDate = endOfMonth(startDate);
 
-      for (let day = startDate.getDate(); day <= endDate.getDate(); day++) {
-        const currentDate = new Date(year, month, day);
-        const dayOfWeek = currentDate.getDay();
-        if (WEEKDAYS.includes(dayOfWeek)) {
-          let currentStartTime = new Date(
-            year,
-            month,
-            day,
-            START_HOUR,
-            START_MINUTES
-          );
-          const endTime = new Date(year, month, day, END_HOUR, END_MINUTES);
-          while (
-            currentStartTime < endTime &&
-            currentStartTime.getHours() < END_HOUR
-          ) {
-            const existingAppointment = await Appointment.findOne({
-              date: currentDate,
-              startTime: currentStartTime,
-              professional: professionalId,
-            });
-            if (!existingAppointment) {
-              await Appointment.create({
+        const appointments = [];
+
+        for (let day = startDate.getDate(); day <= endDate.getDate(); day++) {
+          const currentDate = new Date(year, month, day);
+          const dayOfWeek = currentDate.getDay();
+
+          if (WEEKDAYS.includes(dayOfWeek)) {
+            let currentStartTime = new Date(
+              year,
+              month,
+              day,
+              START_HOUR,
+              START_MINUTES
+            );
+            const endTime = new Date(year, month, day, END_HOUR, END_MINUTES);
+
+            while (
+              currentStartTime < endTime &&
+              currentStartTime.getHours() < END_HOUR
+            ) {
+              appointments.push({
                 date: currentDate,
                 year,
                 month,
@@ -56,16 +55,15 @@ class AppointmentService {
                 active: false,
                 professional: professionalId,
               });
-              totalAppointments++;
-            } else {
-              return null;
+
+              currentStartTime.setMinutes(currentStartTime.getMinutes() + 30);
             }
-            currentStartTime.setMinutes(currentStartTime.getMinutes() + 30);
           }
         }
-      }
 
-      return totalAppointments;
+        const result = await Appointment.insertMany(appointments);
+        return result.length;
+      } else return null;
     } catch (error) {
       throw error;
     }
