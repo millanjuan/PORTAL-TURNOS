@@ -7,8 +7,9 @@ import routes from "./src/routes";
 import dotenv from "dotenv";
 dotenv.config();
 
-//TODO 1)crear middlewares necesarios,
-//TODO 2) parsear a minuscula los datos que ingresan necesarios
+//TODO 3) RECUPERO DE CONTRASEÑA y usuario
+//TODO 4) ACTIVACION DE CUENTA
+//TODO 5)EMAILS
 import "./src/db/db";
 
 const server = express();

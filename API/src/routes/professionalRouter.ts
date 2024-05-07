@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { verifyToken, verifyAdmin } from "../middlewares/auth.middlewares";
 import ProfessionalController from "../controllers/professional.controller";
+import { validateParams } from "../middlewares/user.middlewares";
+import { professionalParams } from "../utils/variables/validation.variables";
 
 const router = Router();
 
@@ -9,18 +11,21 @@ router.post(
   "/new",
   verifyToken,
   verifyAdmin,
+  validateParams(professionalParams.create),
   ProfessionalController.newProfessional
 );
 router.put(
   "/:id",
   verifyToken,
   verifyAdmin,
+  validateParams(professionalParams.update),
   ProfessionalController.updateProfessional
 );
 router.delete(
   "/delete/:id",
   verifyToken,
   verifyAdmin,
+  validateParams(professionalParams.delete),
   ProfessionalController.deleteProfessional
 );
 

@@ -25,13 +25,13 @@ const UserSchema: Schema = new Schema({
   lastname: { type: String, required: true },
   identity: { type: Number, required: true },
   typeidentity: { type: String, required: true },
+  birthdate: { type: String, required: true },
+  role: { type: String, required: true },
+  verified: { type: Boolean, required: true, default: false },
   address: { type: String },
   cellphone: { type: String },
   gender: { type: String },
-  birthdate: { type: String, required: true },
-  verified: { type: Boolean, required: true, default: false },
   picture: { type: String },
-  role: { type: String, required: true, default: "patient" },
 });
 
 export const User = mongoose.model<IUser>("User", UserSchema);

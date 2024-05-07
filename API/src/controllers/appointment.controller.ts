@@ -3,6 +3,10 @@ import AppointmentService from "../services/appointment.service";
 import { IMonthlyAppointments } from "../utils/interfaces/appointment.interface";
 import { CustomError } from "../utils/classes/classes";
 import { appointmentErrors } from "../utils/errors/errorsTypes/errors.appointment";
+import { AuthenticatedRequest } from "../utils/interfaces/user.interface";
+import appointmentService from "../services/appointment.service";
+import { userErrors } from "../utils/errors/errorsTypes/errors.user";
+
 class AppointmentController {
   async createMonthlyAppointments(req: Request, res: Response) {
     try {
@@ -31,11 +35,11 @@ class AppointmentController {
 
   async getAppointmentsByMonth(req: Request, res: Response) {
     try {
-      const { year, month, professional } = req.body;
+      const { year, month, professionalId } = req.body;
       const appointments = await AppointmentService.getAppointmentsByMonth(
         year,
         month,
-        professional
+        professionalId
       );
       return res
         .status(200)
@@ -72,9 +76,10 @@ class AppointmentController {
     }
   }
 
-  async schuddleAppointment(req: Request, res: Response) {
+  async schuddleAppointment(req: AuthenticatedRequest, res: Response) {
     try {
-      const { userId, appointmentId } = req.body;
+      const userId = req.user?.id;
+      const { appointmentId } = req.body;
       const schuddledAppointment = await AppointmentService.schuddleAppointment(
         { userId, appointmentId }
       );
@@ -93,15 +98,35 @@ class AppointmentController {
     }
   }
 
-  async cancelAppointment(req: Request, res: Response) {
+  async cancelAppointment(req: AuthenticatedRequest, res: Response) {
     try {
-      const { userId, appointmentId } = req.body;
+      const userId = req.user?.id;
+      const { appointmentId } = req.body;
 
       await AppointmentService.cancelAppointment({
         userId,
         appointmentId,
       });
       res.status(200).json({ success: true });
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res
+          .status(error.statusCode)
+          .json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
+    }
+  }
+
+  async getUserAppointments(req: AuthenticatedRequest, res: Response) {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        throw new CustomError(userErrors.ID_ERROR, 400);
+      }
+      const appointments = await appointmentService.getUserAppointments(userId);
+      res.status(200).json({ success: true, appointments: appointments });
     } catch (error) {
       if (error instanceof CustomError) {
         res

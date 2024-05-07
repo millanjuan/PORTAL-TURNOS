@@ -22,6 +22,7 @@ class AuthService {
       identity,
       typeidentity,
       birthdate,
+      role,
     } = userData;
     try {
       const existingUser = await User.findOne({
@@ -47,6 +48,7 @@ class AuthService {
         identity,
         typeidentity: typeidentity.toLowerCase(),
         birthdate,
+        role,
       });
       await newUser.save();
       const payload: Partial<IUser> = {

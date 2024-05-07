@@ -2,7 +2,7 @@ import {
   IMonthlyAppointments,
   ISchuddleAppointment,
 } from "../utils/interfaces/appointment.interface";
-import { Appointment } from "../models/appointment.model";
+import { Appointment, IAppointment } from "../models/appointment.model";
 import { CustomError } from "../utils/classes/classes";
 import { appointmentErrors } from "../utils/errors/errorsTypes/errors.appointment";
 import { startOfDay, endOfDay, endOfMonth } from "date-fns";
@@ -67,14 +67,14 @@ class AppointmentService {
   async getAppointmentsByMonth(
     year: number,
     month: number,
-    professional: string
+    professionalId: string
   ): Promise<any[]> {
     try {
       const appointments = await Appointment.find({
         year,
         month,
         active: false,
-        professional,
+        professional: professionalId,
       });
 
       if (!appointments) {
@@ -154,6 +154,18 @@ class AppointmentService {
       } else {
         throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getUserAppointments(userId: string): Promise<any[]> {
+    try {
+      const appointments = await Appointment.find({ user: userId });
+      if (!appointments) {
+        throw new CustomError(appointmentErrors.NOT_FOUND, 404);
+      }
+      return appointments;
     } catch (error) {
       throw error;
     }

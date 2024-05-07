@@ -1,6 +1,8 @@
 import { Router } from "express";
 import SpecialityController from "../controllers/speciality.controller";
 import { verifyToken, verifyAdmin } from "../middlewares/auth.middlewares";
+import { validateParams } from "../middlewares/user.middlewares";
+import { specialityParams } from "../utils/variables/validation.variables";
 
 const router = Router();
 
@@ -9,18 +11,21 @@ router.post(
   "/new",
   verifyToken,
   verifyAdmin,
+  validateParams(specialityParams.create),
   SpecialityController.newSpeciality
 );
 router.put(
   "/:id",
   verifyToken,
   verifyAdmin,
+  validateParams(specialityParams.update),
   SpecialityController.updateSpeciality
 );
 router.delete(
   "/delete/:id",
   verifyToken,
   verifyAdmin,
+  validateParams(specialityParams.delete),
   SpecialityController.deleteSpeciality
 );
 

@@ -2,12 +2,7 @@ import { Request, Response } from "express";
 import UserService from "../services/user.service";
 import { CustomError } from "../utils/classes/classes";
 import { userErrors } from "../utils/errors/errorsTypes/errors.user";
-
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string;
-  };
-}
+import { AuthenticatedRequest } from "../utils/interfaces/user.interface";
 
 class UserController {
   async getUserByIdentity(req: Request, res: Response): Promise<void> {
