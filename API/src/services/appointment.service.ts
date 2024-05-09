@@ -22,11 +22,11 @@ class AppointmentService {
   }: IMonthlyAppointments): Promise<number | null> {
     try {
       const existingAppointments = await Appointment.findOne({ month, year });
-      if (!existingAppointments) {
+      if (existingAppointments) {
         const startDate = new Date(year, month);
         const endDate = endOfMonth(startDate);
         const appointments = [];
-
+        //todo Recursividad
         for (let day = startDate.getDate(); day <= endDate.getDate(); day++) {
           const currentDate = new Date(year, month, day);
           const dayOfWeek = currentDate.getDay();
@@ -58,7 +58,8 @@ class AppointmentService {
         }
         const result = await Appointment.insertMany(appointments);
         return result.length;
-      } else return null;
+      }
+      return null;
     } catch (error) {
       throw error;
     }

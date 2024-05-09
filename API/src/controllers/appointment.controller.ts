@@ -16,11 +16,7 @@ class AppointmentController {
         year,
         professionalId,
       });
-      if (!appointments) {
-        res.status(201).json({ success: false, appointments: appointments });
-      } else {
-        res.status(201).json({ success: true, appointments: appointments });
-      }
+      res.status(201).json({ success: !!appointments, count: appointments });
     } catch (error) {
       if (error instanceof CustomError) {
         console.error(appointmentErrors.CREATING_ERROR, error.message);
