@@ -1,0 +1,123 @@
+// Variables
+@import "../../styles/mixins/mixins"
+//Mixins
+@import "../../styles/variables/variables"   
+
+.mainContainer
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 100vh
+  width: 100%
+
+.leftContainer
+  width: 40%
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  max-height: 100vh
+
+.title
+  color: $primary-color
+  margin: 20px 0px
+  font-size: 30px
+  font-weight: 300
+  border-bottom: 1px solid $primary-color
+
+.formContainer
+  display: flex
+  align-items: center
+  justify-content: center
+
+
+.formContainer
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 90%
+
+.signInForm
+  display: flex
+  flex-direction: column
+  width: 90%
+  background-color: white
+  border-radius: 8px
+
+  .inputContainer
+    width: 100%
+    height: 70px
+
+  .input
+    @include inputStyles($background-color, $secondary-color, $border-color)
+        
+  .errorInput
+     @include inputErrorStyles($background-color, $secondary-color, red)
+
+  .errorText
+    font-size: 15px
+    color: red
+    max-width: 100%
+.button
+  @include greenButton
+  margin-top: 10px
+
+
+.footer
+  display: flex
+  align-items: center
+  gap: 5px
+  margin-top: 10px
+
+.footer p
+  font-size: 14px
+
+
+.footer strong 
+  font-size: 14px
+  transition: color 0.3s ease
+
+  &:hover
+    color: $secondary-color
+    cursor: pointer
+.rightContainer
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: 50px 40px
+  position: relative
+  width: 60%
+  min-height: 100vh
+  background-image: url("../../assets/images/auth.jpg")
+  background-size: cover
+  background-position: center
+
+  &::after
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(0, 0, 0, 0.388) 
+    z-index: 1
+
+.overlayTextContainer
+    position: absolute
+    z-index: 2
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    padding: 0px 10%
+
+.logo
+ width: 35%
+.overlayTitle
+  color: white
+  font-size: 40px
+  font-weight: 300
+
+.overlayText
+  color: white
+  margin-top: 20px
+  font-size:15px

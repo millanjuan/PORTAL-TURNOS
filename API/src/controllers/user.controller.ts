@@ -26,7 +26,7 @@ class UserController {
     res: Response
   ): Promise<void> {
     try {
-      const id = req.user?.id;
+      const id = req.user?._id;
       if (!id) {
         throw new CustomError(userErrors.ID_ERROR, 400);
       }
@@ -48,7 +48,7 @@ class UserController {
     res: Response
   ): Promise<void> {
     try {
-      const id = req.user?.id;
+      const id = req.user?._id;
       const updatedUserInfo = req.body;
       if (!id) {
         throw new CustomError(userErrors.ID_ERROR, 400);

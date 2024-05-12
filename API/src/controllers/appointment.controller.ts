@@ -74,7 +74,7 @@ class AppointmentController {
 
   async schuddleAppointment(req: AuthenticatedRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.user?._id;
       const { appointmentId } = req.body;
       const schuddledAppointment = await AppointmentService.schuddleAppointment(
         { userId, appointmentId }
@@ -96,7 +96,7 @@ class AppointmentController {
 
   async cancelAppointment(req: AuthenticatedRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.user?._id;
       const { appointmentId } = req.body;
 
       await AppointmentService.cancelAppointment({
@@ -117,7 +117,7 @@ class AppointmentController {
 
   async getUserAppointments(req: AuthenticatedRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.user?._id;
       if (!userId) {
         throw new CustomError(userErrors.ID_ERROR, 400);
       }

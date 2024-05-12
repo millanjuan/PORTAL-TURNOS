@@ -1,4 +1,4 @@
-import { ISignUp } from "../interfaces/interfaces";
+import { ISignUp } from "../interfaces/authInterface";
 
 const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,39 +20,39 @@ const validateSignUp = (userData: ISignUp) => {
     password2,
     identity,
   } = userData;
-  const errors: Partial<Record<keyof ISignUp, string>> = {};
+  const registerErrors: Partial<Record<keyof ISignUp, string>> = {};
 
   if (!firstname) {
-    errors.firstname = "Firstname is required.";
+    registerErrors.firstname = "Firstname is required.";
   }
   if (!lastname) {
-    errors.lastname = "Lastname is required.";
+    registerErrors.lastname = "Lastname is required.";
   }
   if (!email) {
-    errors.email = "Email is required.";
+    registerErrors.email = "Email is required.";
   } else if (!isValidEmail(email)) {
-    errors.email = "Invalid email.";
+    registerErrors.email = "Invalid email.";
   }
 
   if (!username) {
-    errors.username = "Username is required.";
+    registerErrors.username = "Username is required.";
   } else if (username.length < 6 || username.length > 20) {
-    errors.username = "Username must be between 6 and 20 characters.";
+    registerErrors.username = "Username must be between 6 and 20 characters.";
   }
 
   if (!password || !password2) {
-    errors.password = "Password is required.";
+    registerErrors.password = "Password is required.";
   } else if (!isValidPassword(password) || !isValidPassword(password2)) {
-    errors.password = "Password must be between 8 and 20 characters.";
+    registerErrors.password = "Password must be between 8 and 20 characters.";
   } else if (password !== password2) {
-    errors.password = "Passwords don't match.";
+    registerErrors.password = "Passwords don't match.";
   }
 
   if (!identity) {
-    errors.identity = "Identity is required.";
+    registerErrors.identity = "Identity is required.";
   }
 
-  return errors;
+  return registerErrors;
 };
 
 export default validateSignUp;

@@ -9,8 +9,6 @@ export interface ISignUpErrors {
   email: string;
   username: string;
   password: string;
-  password2: string;
-  typeidentity: string;
   identity: string;
 }
 export interface ISignInErrors {
@@ -35,6 +33,5 @@ export interface ISignIn {
 
 export interface IAuthState {
   loading: boolean;
-  isAuthenticated: boolean;
   userData: any;
 }

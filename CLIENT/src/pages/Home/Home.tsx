@@ -1,5 +1,7 @@
-const Home = () => {
-  return <div>Home</div>;
+import styles from "./home.module.sass";
+
+const Home: React.FC = () => {
+  return <div className={styles.mainContainer}></div>;
 };
 
 export default Home;

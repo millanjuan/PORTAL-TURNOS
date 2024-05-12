@@ -1,29 +1,29 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   ISignIn,
+  ISignInErrors,
   ISignUp,
   ISignUpErrors,
-} from "../utils/interfaces/interfaces";
+} from "../utils/interfaces/authInterface";
 import validateSignUp from "../utils/validations/signUpValidation";
-import { signUpAsync } from "../redux/thunks/authThunk";
-import Swal from "sweetalert2";
+import { signUpAsync, signInAsync } from "../redux/thunks/authThunk";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { errorAlert } from "../utils/alerts/alerts";
+import validateSignIn from "../utils/validations/signInValidation";
+import {
+  initialErrorRegisterState,
+  initialLoginErrorState,
+} from "../utils/states/authStates";
 
 const useAuth = (initialState: ISignUp | ISignIn) => {
   const [user, setUser] = useState<ISignUp | ISignIn>(initialState);
-  const [errors, setErrors] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    username: "",
-    password: "",
-    identity: "",
-  });
+  const [registerErrors, setRegisterErrors] = useState(
+    initialErrorRegisterState
+  );
+  const [loginErrors, setLoginErrors] = useState(initialLoginErrorState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const validUser = useSelector((state: any) => state.auth.userData);
 
   const handleChange = (
     e: ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -33,36 +33,61 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
       ...user,
       [name]: value,
     });
-    setErrors({
-      ...errors,
-      [name]: "",
-    });
+    const isRegisterForm = "firstname" in user;
+    if (isRegisterForm) {
+      setRegisterErrors({
+        ...registerErrors,
+        [name]: "",
+      });
+    } else {
+      setLoginErrors({
+        ...loginErrors,
+        [name]: "",
+      });
+    }
   };
 
-  const handleRegister = () => {
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  const handleRegister = async () => {
     const validationError = validateSignUp(user as ISignUp);
     if (Object.keys(validationError).length === 0) {
       try {
-        const response = dispatch<any>(signUpAsync(user as ISignUp));
-        console.log("response", response);
-        if (validUser) navigate("/home");
+        const { payload } = await dispatch<any>(signUpAsync(user as ISignUp));
+        if (!payload.success) return errorAlert(payload.error);
+        navigate("/home");
       } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Please try again",
-          confirmButtonText: "OK",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.close();
-          }
-        });
+        throw error;
       }
     } else {
-      setErrors(validationError as ISignUpErrors);
+      setRegisterErrors(validationError as ISignUpErrors);
     }
   };
-  return { handleChange, handleRegister, errors };
+
+  const handleLogin = async () => {
+    const validationError = validateSignIn(user as ISignIn);
+    if (Object.keys(validationError).length === 0) {
+      try {
+        const { payload } = await dispatch<any>(signInAsync(user as ISignIn));
+        if (!payload.success) return errorAlert(payload.error);
+        navigate("/");
+      } catch (error) {
+        throw error;
+      }
+    } else {
+      setLoginErrors(validationError as ISignInErrors);
+    }
+  };
+  return {
+    handleChange,
+    handleRegister,
+    handleLogin,
+    registerErrors,
+    loginErrors,
+    handleNavigate,
+  };
 };
 
 export default useAuth;

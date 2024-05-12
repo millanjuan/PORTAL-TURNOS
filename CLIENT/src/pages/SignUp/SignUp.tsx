@@ -1,24 +1,14 @@
-import styles from "./SignUp.module.sass";
+import styles from "./signUp.module.sass";
 import logo from "../../assets/images/logoWhite.png";
-import { ISignUp } from "../../utils/interfaces/interfaces";
 import useAuth from "../../hooks/useAuth";
-
-const initialState: ISignUp = {
-  firstname: "",
-  lastname: "",
-  email: "",
-  username: "",
-  password: "",
-  password2: "",
-  typeidentity: "DNI",
-  identity: null,
-};
+import { initialRegisterState } from "../../utils/states/authStates";
 
 const SignUp: React.FC = () => {
-  const { handleChange, handleRegister, errors } = useAuth(initialState);
+  const { handleChange, handleRegister, handleNavigate, registerErrors } =
+    useAuth(initialRegisterState);
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.rightContainer}>
+      <div className={styles.leftContainer}>
         <div className={styles.formContainer}>
           <form className={styles.signUpForm}>
             <h2 className={styles.title}>Sign up</h2>
@@ -30,11 +20,11 @@ const SignUp: React.FC = () => {
                   placeholder="Firstname"
                   onChange={handleChange}
                   className={
-                    errors.firstname ? styles.errorInput : styles.input
+                    registerErrors.firstname ? styles.errorInput : styles.input
                   }
                 />
-                {errors.firstname && (
-                  <p className={styles.errorText}>{errors.firstname}</p>
+                {registerErrors.firstname && (
+                  <p className={styles.errorText}>{registerErrors.firstname}</p>
                 )}
               </div>
               <div className={styles.inputContainer}>
@@ -43,10 +33,12 @@ const SignUp: React.FC = () => {
                   name="lastname"
                   placeholder="Lastname"
                   onChange={handleChange}
-                  className={errors.lastname ? styles.errorInput : styles.input}
+                  className={
+                    registerErrors.lastname ? styles.errorInput : styles.input
+                  }
                 />
-                {errors.lastname && (
-                  <p className={styles.errorText}>{errors.lastname}</p>
+                {registerErrors.lastname && (
+                  <p className={styles.errorText}>{registerErrors.lastname}</p>
                 )}
               </div>
             </div>
@@ -56,10 +48,12 @@ const SignUp: React.FC = () => {
                 name="email"
                 placeholder="Email"
                 onChange={handleChange}
-                className={errors.email ? styles.errorInput : styles.input}
+                className={
+                  registerErrors.email ? styles.errorInput : styles.input
+                }
               />
-              {errors.email && (
-                <p className={styles.errorText}>{errors.email}</p>
+              {registerErrors.email && (
+                <p className={styles.errorText}>{registerErrors.email}</p>
               )}
             </div>
             <div className={styles.inputContainer}>
@@ -68,10 +62,12 @@ const SignUp: React.FC = () => {
                 name="username"
                 placeholder="Username"
                 onChange={handleChange}
-                className={errors.username ? styles.errorInput : styles.input}
+                className={
+                  registerErrors.username ? styles.errorInput : styles.input
+                }
               />
-              {errors.username && (
-                <p className={styles.errorText}>{errors.username}</p>
+              {registerErrors.username && (
+                <p className={styles.errorText}>{registerErrors.username}</p>
               )}
             </div>
             <div className={styles.inputContainer}>
@@ -80,10 +76,12 @@ const SignUp: React.FC = () => {
                 name="password"
                 placeholder="Password"
                 onChange={handleChange}
-                className={errors.password ? styles.errorInput : styles.input}
+                className={
+                  registerErrors.password ? styles.errorInput : styles.input
+                }
               />
-              {errors.password && (
-                <p className={styles.errorText}>{errors.password}</p>
+              {registerErrors.password && (
+                <p className={styles.errorText}>{registerErrors.password}</p>
               )}
             </div>
             <div className={styles.inputContainer}>
@@ -92,10 +90,12 @@ const SignUp: React.FC = () => {
                 name="password2"
                 placeholder="Repeat password"
                 onChange={handleChange}
-                className={errors.password ? styles.errorInput : styles.input}
+                className={
+                  registerErrors.password ? styles.errorInput : styles.input
+                }
               />
-              {errors.password && (
-                <p className={styles.errorText}>{errors.password}</p>
+              {registerErrors.password && (
+                <p className={styles.errorText}>{registerErrors.password}</p>
               )}
             </div>
             <div className={styles.footerInputs}>
@@ -117,10 +117,12 @@ const SignUp: React.FC = () => {
                   name="identity"
                   placeholder="Identity number"
                   onChange={handleChange}
-                  className={errors.identity ? styles.errorInput : styles.input}
+                  className={
+                    registerErrors.identity ? styles.errorInput : styles.input
+                  }
                 />
-                {errors.identity && (
-                  <p className={styles.errorText}>{errors.identity}</p>
+                {registerErrors.identity && (
+                  <p className={styles.errorText}>{registerErrors.identity}</p>
                 )}
               </div>
             </div>
@@ -133,12 +135,12 @@ const SignUp: React.FC = () => {
             </button>
             <footer className={styles.footer}>
               <p>Already have an account? </p>
-              <strong>Sign in</strong>
+              <strong onClick={() => handleNavigate("/signin")}>Sign in</strong>
             </footer>
           </form>
         </div>
       </div>
-      <div className={styles.leftContainer}>
+      <div className={styles.rightContainer}>
         <div className={styles.overlayTextContainer}>
           <img src={logo} alt="logo" className={styles.logo} />
           <h3 className={styles.overlayTitle}>Patient's portal</h3>

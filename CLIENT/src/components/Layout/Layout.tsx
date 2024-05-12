@@ -1,7 +1,7 @@
 import Header from "../Header/Header";
 import { useLocation } from "react-router-dom";
 import { routesWithoutHeader } from "../../utils/constants/constants";
-import { LayoutProps } from "../../utils/interfaces/interfaces";
+import { LayoutProps } from "../../utils/interfaces/authInterface";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
