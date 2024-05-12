@@ -7,7 +7,6 @@ export const authParams = {
     "lastname",
     "identity",
     "typeidentity",
-    "birthdate",
   ],
   login: ["username", "password"],
 };

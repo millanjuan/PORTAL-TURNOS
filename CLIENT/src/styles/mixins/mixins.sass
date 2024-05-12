@@ -1,0 +1,50 @@
+@mixin inputStyles($color1, $color2, $color3 )
+  width: 100%
+  height: 44px
+  padding: 12px 16px
+  border-radius: 4px
+  background-color: $color1
+  border: 1px solid $color3
+  transition: border-color 0.5s ease
+
+  &:focus
+    border-color: $color2
+    outline: none
+
+@mixin inputErrorStyles($color1, $color2, $color3 )
+  width: 100%
+  height: 44px
+  padding: 12px 16px
+  border-radius: 4px
+  background-color: $color1
+  border: 1px solid $color3
+  transition: border-color 0.5s ease
+
+  &:focus
+    border-color: $color2
+    outline: none
+
+@mixin selectStyles($color1, $color2, $color3)
+  width: 100%
+  height: 44px
+  padding: 12px 16px
+  background-color: $color1
+  border: 1px solid $color3
+  transition: border-color 0.5s ease
+
+  &:focus
+    outline: none
+    border-color: $color2
+
+@mixin greenButton
+  color: white
+  font-size: 20px
+  font-weight: 300 
+  height: 44px
+  border: none
+  border-radius: 4px
+  background: linear-gradient(180deg, #21BE39 0%, #0F581A 100%)
+
+  &:hover
+    cursor: pointer
+    background: linear-gradient(180deg, #41D756 0%, #1C7E2D 100%)

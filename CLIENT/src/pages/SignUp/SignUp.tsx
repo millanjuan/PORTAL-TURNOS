@@ -1,5 +1,5 @@
 import styles from "./SignUp.module.sass";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/images/logoWhite.png";
 import { ISignUp } from "../../utils/interfaces/interfaces";
 import useAuth from "../../hooks/useAuth";
 
@@ -12,85 +12,141 @@ const initialState: ISignUp = {
   password2: "",
   typeidentity: "DNI",
   identity: null,
-  birthdate: "",
 };
 
-const SignUp = () => {
-  const [handleChange] = useAuth(initialState);
+const SignUp: React.FC = () => {
+  const { handleChange, handleRegister, errors } = useAuth(initialState);
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.leftContainer}></div>
       <div className={styles.rightContainer}>
-        <img src={logo} alt="logo" className={styles.logo} />
-        <form className={styles.signUpForm}>
-          <div className={styles.fullnameContainer}>
-            <div className={styles.inputContainer}>
-              <input
-                type="text"
-                name="firstname"
-                placeholder="Firstname"
-                onChange={handleChange}
-                className={styles.input}
-              />
+        <div className={styles.formContainer}>
+          <form className={styles.signUpForm}>
+            <h2 className={styles.title}>Sign up</h2>
+            <div className={styles.fullnameContainer}>
+              <div className={styles.inputContainer}>
+                <input
+                  type="text"
+                  name="firstname"
+                  placeholder="Firstname"
+                  onChange={handleChange}
+                  className={
+                    errors.firstname ? styles.errorInput : styles.input
+                  }
+                />
+                {errors.firstname && (
+                  <p className={styles.errorText}>{errors.firstname}</p>
+                )}
+              </div>
+              <div className={styles.inputContainer}>
+                <input
+                  type="text"
+                  name="lastname"
+                  placeholder="Lastname"
+                  onChange={handleChange}
+                  className={errors.lastname ? styles.errorInput : styles.input}
+                />
+                {errors.lastname && (
+                  <p className={styles.errorText}>{errors.lastname}</p>
+                )}
+              </div>
             </div>
             <div className={styles.inputContainer}>
               <input
-                type="text"
-                name="lastname"
-                placeholder="Lastname"
+                type="email"
+                name="email"
+                placeholder="Email"
                 onChange={handleChange}
-                className={styles.input}
+                className={errors.email ? styles.errorInput : styles.input}
               />
-            </div>
-          </div>
-          <div className={styles.inputContainer}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <input
-              type="password"
-              name="password2"
-              placeholder="Repeat password"
-              onChange={handleChange}
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.footerInputs}>
-            <div className={styles.selectContainer}>
-              <select name="typeidentity" onChange={handleChange}>
-                <option value="DNI">DNI</option>
-                <option value="CDI">CDI</option>
-                <option value="LC">LC</option>
-                <option value="LE">LE</option>
-              </select>
+              {errors.email && (
+                <p className={styles.errorText}>{errors.email}</p>
+              )}
             </div>
             <div className={styles.inputContainer}>
               <input
                 type="text"
-                name="identity"
-                placeholder="Identity number"
+                name="username"
+                placeholder="Username"
                 onChange={handleChange}
-                className={styles.input}
+                className={errors.username ? styles.errorInput : styles.input}
               />
+              {errors.username && (
+                <p className={styles.errorText}>{errors.username}</p>
+              )}
             </div>
-          </div>
-          <button type="submit">Sign In</button>
-        </form>
+            <div className={styles.inputContainer}>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className={errors.password ? styles.errorInput : styles.input}
+              />
+              {errors.password && (
+                <p className={styles.errorText}>{errors.password}</p>
+              )}
+            </div>
+            <div className={styles.inputContainer}>
+              <input
+                type="password"
+                name="password2"
+                placeholder="Repeat password"
+                onChange={handleChange}
+                className={errors.password ? styles.errorInput : styles.input}
+              />
+              {errors.password && (
+                <p className={styles.errorText}>{errors.password}</p>
+              )}
+            </div>
+            <div className={styles.footerInputs}>
+              <div className={styles.selectContainer}>
+                <select
+                  name="typeidentity"
+                  onChange={handleChange}
+                  className={styles.select}
+                >
+                  <option value="DNI">DNI</option>
+                  <option value="CDI">CDI</option>
+                  <option value="LC">LC</option>
+                  <option value="LE">LE</option>
+                </select>
+              </div>
+              <div className={styles.inputContainer}>
+                <input
+                  type="text"
+                  name="identity"
+                  placeholder="Identity number"
+                  onChange={handleChange}
+                  className={errors.identity ? styles.errorInput : styles.input}
+                />
+                {errors.identity && (
+                  <p className={styles.errorText}>{errors.identity}</p>
+                )}
+              </div>
+            </div>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={handleRegister}
+            >
+              Sign up
+            </button>
+            <footer className={styles.footer}>
+              <p>Already have an account? </p>
+              <strong>Sign in</strong>
+            </footer>
+          </form>
+        </div>
+      </div>
+      <div className={styles.leftContainer}>
+        <div className={styles.overlayTextContainer}>
+          <img src={logo} alt="logo" className={styles.logo} />
+          <h3 className={styles.overlayTitle}>Patient's portal</h3>
+          <p className={styles.overlayText}>
+            From here you can get appointments for yourself and your family and
+            check the assigned appointments.
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -61,7 +61,13 @@ class AuthService {
         typeidentity: newUser.typeidentity,
         birthdate: newUser.birthdate,
       };
-      return payload;
+      const expiresIn = 8 * 60 * 60;
+      const token = jwt.sign(payload, SECRET_KEY, {
+        expiresIn,
+      });
+      const expirationTime = new Date(Date.now() + expiresIn * 1000);
+
+      return { token, expirationTime, user: payload };
     } catch (error) {
       throw error;
     }
@@ -92,7 +98,7 @@ class AuthService {
       });
       const expirationTime = new Date(Date.now() + expiresIn * 1000);
 
-      return { token, expirationTime, userData: payload };
+      return { token, expirationTime, user: payload };
     } catch (error) {
       throw error;
     }

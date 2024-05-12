@@ -12,7 +12,7 @@ class AuthController {
       const userData = req.body;
       const newUser = await AuthService.createUser(userData);
       if (newUser) {
-        res.status(201).json({ success: true, user: newUser });
+        res.status(201).json({ success: true, ...newUser });
       }
     } catch (error) {
       if (error instanceof CustomError) {
