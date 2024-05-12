@@ -7,13 +7,14 @@ import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forcedSignInAsync } from "./redux/thunks/authThunk";
+import { RootState } from "./redux/store/store";
 
 const App = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.userData);
+  const userData = useSelector((state: RootState) => state.auth.userData);
 
   const getUserData = async (token: string) => {
     try {

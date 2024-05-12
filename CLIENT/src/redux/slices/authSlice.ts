@@ -12,6 +12,7 @@ const authSlice = createSlice({
   reducers: {
     logOut: () => {
       localStorage.removeItem("token");
+      localStorage.removeItem("expirationTime");
     },
   },
   extraReducers: (builder) => {
@@ -52,5 +53,5 @@ const authSlice = createSlice({
       });
   },
 });
-
+export const { logOut } = authSlice.actions;
 export default authSlice.reducer;

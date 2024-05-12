@@ -59,7 +59,6 @@ class AuthService {
         lastname: newUser.lastname,
         identity: newUser.identity,
         typeidentity: newUser.typeidentity,
-        birthdate: newUser.birthdate,
       };
       const expiresIn = 8 * 60 * 60;
       const token = jwt.sign(payload, SECRET_KEY, {
@@ -84,13 +83,16 @@ class AuthService {
       const payload: Partial<IUser> = {
         _id: user._id,
         email: user.email,
+        username: user.username,
         firstname: user.firstname,
         lastname: user.lastname,
-        typeidentity: user.typeidentity,
         identity: user.identity,
+        typeidentity: user.typeidentity,
         birthdate: user.birthdate,
-        verified: user.verified,
-        role: user.role,
+        address: user.address,
+        cellphone: user.cellphone,
+        gender: user.gender,
+        picture: user.picture,
       };
       const expiresIn = 8 * 60 * 60; // 8 horas
       const token = jwt.sign(payload, SECRET_KEY, {
