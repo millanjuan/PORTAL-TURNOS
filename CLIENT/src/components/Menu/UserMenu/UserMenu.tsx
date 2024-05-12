@@ -13,6 +13,7 @@ import { BiPlusMedical } from "react-icons/bi";
 import { TbReportMedical } from "react-icons/tb";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { MdMenu } from "react-icons/md";
 import styles from "./userMenu.module.sass";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -51,6 +52,7 @@ const UserMenu: React.FC = () => {
             </ListItemButton>
           </ListItem>
         </Link>
+
         <Link to="/new-appointment" className={styles.link}>
           <ListItem>
             <ListItemButton>
@@ -62,24 +64,28 @@ const UserMenu: React.FC = () => {
           </ListItem>
         </Link>
 
-        <Link to="/appointments" className={styles.link}></Link>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <TbReportMedical className={styles.icon} />
-            </ListItemIcon>
-            <ListItemText primary="My appointments" />
-          </ListItemButton>
-        </ListItem>
-        <Link to="/settings" className={styles.link}></Link>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <RiUserSettingsFill className={styles.icon} />
-            </ListItemIcon>
-            <ListItemText primary="Account settings" />
-          </ListItemButton>
-        </ListItem>
+        <Link to="/appointments" className={styles.link}>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <TbReportMedical className={styles.icon} />
+              </ListItemIcon>
+              <ListItemText primary="My appointments" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
+        <Link to="/settings" className={styles.link}>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <RiUserSettingsFill className={styles.icon} />
+              </ListItemIcon>
+              <ListItemText primary="Account settings" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
         <ListItem>
           <ListItemButton onClick={handleLogOut}>
             <ListItemIcon>
@@ -94,7 +100,9 @@ const UserMenu: React.FC = () => {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+      <Button onClick={toggleDrawer(true)} className={styles.menuButton}>
+        <MdMenu className={styles.menuIcon} />
+      </Button>
       <Drawer open={open} onClose={toggleDrawer(false)} anchor="right">
         {DrawerList}
       </Drawer>
