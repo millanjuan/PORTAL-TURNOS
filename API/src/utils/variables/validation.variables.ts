@@ -13,8 +13,8 @@ export const authParams = {
 
 export const appointmentParams = {
   appointment: ["year", "month", "professionalId"],
-  date: ["date", "professional"],
-  schuddleOrCancel: ["userId", "appointmentId"],
+  date: ["date", "professionalId"],
+  schuddleOrCancel: ["appointmentId"],
 };
 
 export const professionalParams = {

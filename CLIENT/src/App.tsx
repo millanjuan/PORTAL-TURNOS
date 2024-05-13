@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import Layout from "./components/Layout/Layout";
 import SignUp from "./pages/SignUp/SignUp";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import NewAppointment from "./pages/NewAppointment/NewAppointment";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forcedSignInAsync } from "./redux/thunks/authThunk";
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/new-appointment" element={<NewAppointment />} />
         </Routes>
       </Layout>
     </>

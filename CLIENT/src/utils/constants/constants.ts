@@ -7,3 +7,5 @@ export const signUpFields = [
   "typeidentity",
   "identity",
 ];
+
+export const viteBackUrl = import.meta.env.VITE_URL_BACK;

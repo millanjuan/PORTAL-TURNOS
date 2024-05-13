@@ -90,7 +90,7 @@ class AppointmentService {
 
   async getAppointmentsByDate(
     date: Date,
-    professional: string
+    professionalId: string
   ): Promise<any[]> {
     try {
       const startDate = startOfDay(date);
@@ -98,7 +98,7 @@ class AppointmentService {
 
       const appointments = await Appointment.find({
         date: { $gte: startDate, $lte: endDate },
-        professional,
+        professional: professionalId,
       });
 
       if (appointments && appointments.length > 0) {

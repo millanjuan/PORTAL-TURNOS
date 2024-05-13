@@ -53,10 +53,10 @@ class AppointmentController {
 
   async getAppointmentsByDate(req: Request, res: Response) {
     try {
-      const { date, professional } = req.body;
+      const { date, professionalId } = req.body;
       const appointments = await AppointmentService.getAppointmentsByDate(
         date,
-        professional
+        professionalId
       );
       return res
         .status(200)

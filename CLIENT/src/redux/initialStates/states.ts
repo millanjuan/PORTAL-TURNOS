@@ -8,3 +8,16 @@ export const authInitialState: IAuthState = {
 export const userInitialState = {
   loading: false,
 };
+
+export const appointmentInitialState = {
+  loading: false,
+  monthAppointments: {},
+  dateAppointments: {},
+  userAppointments: {},
+  appointmentState: "speciality",
+};
+
+export const specialitiesInitialState = {
+  loading: false,
+  specialities: [],
+};
