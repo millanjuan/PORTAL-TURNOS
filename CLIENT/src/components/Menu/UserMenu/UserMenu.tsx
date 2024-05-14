@@ -99,7 +99,7 @@ const UserMenu: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <Button onClick={toggleDrawer(true)} className={styles.menuButton}>
         <MdMenu className={styles.menuIcon} />
       </Button>

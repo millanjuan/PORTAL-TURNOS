@@ -7,13 +7,11 @@ export interface IMonthAppointments {
   year: string;
   month: string;
   professionalId: string;
-  token: string;
 }
 
 export interface IDateAppointments {
   date: Date;
   professionalId: string;
-  token: string;
 }
 
 export interface IAppointmentState {

@@ -13,6 +13,10 @@ const specialitySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getSpecialitiesAsync.fulfilled, (state, action) => {
+        state.specialities = action.payload.specialities;
+        state.loading = false;
+      })
       .addMatcher(
         (action) =>
           [
@@ -48,10 +52,6 @@ const specialitySlice = createSlice({
           state.loading = false;
         }
       );
-    builder.addCase(getSpecialitiesAsync.fulfilled, (state, action) => {
-      state.specialities = action.payload.specialities;
-      state.loading = false;
-    });
   },
 });
 

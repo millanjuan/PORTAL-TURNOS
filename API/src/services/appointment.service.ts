@@ -21,8 +21,12 @@ class AppointmentService {
     professionalId,
   }: IMonthlyAppointments): Promise<number | null> {
     try {
-      const existingAppointments = await Appointment.findOne({ month, year });
-      if (existingAppointments) {
+      const existingAppointments = await Appointment.findOne({
+        month,
+        year,
+        professional: professionalId,
+      });
+      if (!existingAppointments) {
         const startDate = new Date(year, month);
         const endDate = endOfMonth(startDate);
         const appointments = [];
@@ -59,6 +63,7 @@ class AppointmentService {
         const result = await Appointment.insertMany(appointments);
         return result.length;
       }
+      console.log("nop");
       return null;
     } catch (error) {
       throw error;

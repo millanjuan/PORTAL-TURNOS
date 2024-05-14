@@ -12,7 +12,6 @@ export interface IUser extends Document {
   cellphone?: string | null;
   gender?: string | null;
   birthdate: string;
-  verified: boolean;
   picture?: string | null;
   role: string;
 }
@@ -26,8 +25,12 @@ const UserSchema: Schema = new Schema({
   identity: { type: Number, required: true },
   typeidentity: { type: String, required: true },
   birthdate: { type: String },
-  role: { type: String, required: true, default: "patient" },
-  verified: { type: Boolean, required: true, default: false },
+  role: {
+    type: String,
+    enum: ["patient", "admin"],
+    default: "patient",
+    required: true,
+  },
   address: { type: String },
   cellphone: { type: String },
   gender: { type: String },

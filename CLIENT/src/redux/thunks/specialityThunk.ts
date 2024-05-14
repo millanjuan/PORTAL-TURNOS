@@ -6,10 +6,10 @@ import {
   IUpdateSpeciality,
 } from "../../utils/interfaces/specialityInterface";
 import { viteBackUrl } from "../../utils/constants/constants";
-
+const token = localStorage.getItem("token");
 export const getSpecialitiesAsync = createAsyncThunk(
   "speciality/getSpecialitiesAsync",
-  async (token, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`${viteBackUrl}/speciality/`, {
         headers: {

@@ -7,6 +7,11 @@ import { professionalParams } from "../utils/variables/validation.variables";
 const router = Router();
 
 router.get("/", verifyToken, ProfessionalController.getProfessionals);
+router.get(
+  "/speciality/:id",
+  verifyToken,
+  ProfessionalController.getProfessionalsBySpeciality
+);
 router.post(
   "/new",
   verifyToken,

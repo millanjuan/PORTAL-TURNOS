@@ -43,16 +43,17 @@
   width: 90%
   background-color: white
   border-radius: 8px
+  background-color: #F0F0F0
 
   .inputContainer
     width: 100%
     height: 70px
 
   .input
-    @include inputStyles($background-color, $secondary-color, $border-color)
+    @include inputStyles(white, $secondary-color, $border-color)
         
   .errorInput
-     @include inputErrorStyles($background-color, $secondary-color, red)
+     @include inputErrorStyles(white, $secondary-color, red)
 
   .errorText
     font-size: 15px

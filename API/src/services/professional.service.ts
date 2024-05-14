@@ -46,13 +46,26 @@ class ProfessionalService {
     }
   }
 
+  async getProfessionalsBySpeciality(id: string): Promise<IProfessional[]> {
+    try {
+      const professionals = Professional.find({ speciality: id });
+      if (!professionals) {
+        throw new CustomError(professionalErrors.NOT_FOUND, 404);
+      }
+      return professionals;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async newProfessional(data: IProfessional): Promise<IProfessional> {
     try {
-      const { firstname, lastname, speciality } = data;
+      const { firstname, lastname, image, speciality } = data;
 
       const newProfessional: IProfessional = new Professional({
         firstname,
         lastname,
+        image,
         speciality,
       });
 

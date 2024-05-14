@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Poppins";
   src: url("./assets//fonts/Poppins-Regular.ttf") format("truetype");
@@ -18,4 +22,5 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f0f0f0;
 }

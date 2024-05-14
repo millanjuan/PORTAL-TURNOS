@@ -6,9 +6,11 @@ import {
   IMonthAppointments,
 } from "../../utils/interfaces/appointmentInterface";
 
+const token = localStorage.getItem("token");
+
 export const schuddleAsync = createAsyncThunk(
   "appointment/schuddleAsync",
-  async ({ appointmentId, token }: IAppointment, { rejectWithValue }) => {
+  async ({ appointmentId }: IAppointment, { rejectWithValue }) => {
     try {
       const config = {
         params: {
@@ -74,7 +76,7 @@ export const getAppointmentsAsync = createAsyncThunk(
 export const getAppointmentsByMonthAsync = createAsyncThunk(
   "appointment/getAppointmentsByMonthAsync",
   async (
-    { year, month, professionalId, token }: IMonthAppointments,
+    { year, month, professionalId }: IMonthAppointments,
     { rejectWithValue }
   ) => {
     try {
@@ -101,10 +103,7 @@ export const getAppointmentsByMonthAsync = createAsyncThunk(
 
 export const getAppointmentsByDateAsync = createAsyncThunk(
   "appointment/getAppointmentsByDateAsync",
-  async (
-    { date, professionalId, token }: IDateAppointments,
-    { rejectWithValue }
-  ) => {
+  async ({ date, professionalId }: IDateAppointments, { rejectWithValue }) => {
     try {
       const config = {
         params: {
@@ -129,7 +128,7 @@ export const getAppointmentsByDateAsync = createAsyncThunk(
 export const postMonthlyAppointmentsAsync = createAsyncThunk(
   "appointment/postMonthlyAppointmentsAsync",
   async (
-    { month, year, professionalId, token }: IMonthAppointments,
+    { month, year, professionalId }: IMonthAppointments,
     { rejectWithValue }
   ) => {
     try {

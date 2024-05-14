@@ -22,7 +22,18 @@ export interface IDeleteSpeciality {
 }
 
 export interface ISpeciality {
+  _id: string;
   name: string;
   image: string;
   professionals: string[];
+}
+
+export interface SpecialityCardsProps {
+  specialities: [];
+}
+
+export interface SpecialityCardProps {
+  id: string;
+  name: string;
+  image: string;
 }

@@ -59,8 +59,9 @@ class AuthService {
         lastname: newUser.lastname,
         identity: newUser.identity,
         typeidentity: newUser.typeidentity,
+        role: newUser.role,
       };
-      const expiresIn = 8 * 60 * 60;
+      const expiresIn = 5 * 60 * 60;
       const token = jwt.sign(payload, SECRET_KEY, {
         expiresIn,
       });
@@ -93,8 +94,9 @@ class AuthService {
         cellphone: user.cellphone,
         gender: user.gender,
         picture: user.picture,
+        role: user.role,
       };
-      const expiresIn = 8 * 60 * 60; // 8 horas
+      const expiresIn = 5 * 60 * 60; // 8 horas horario argentino
       const token = jwt.sign(payload, SECRET_KEY, {
         expiresIn,
       });

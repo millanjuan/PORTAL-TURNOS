@@ -25,7 +25,6 @@ class UserService {
         cellphone: existingUser.cellphone,
         gender: existingUser.gender,
         birthdate: existingUser.birthdate,
-        verified: existingUser.verified,
         picture: existingUser.picture,
         role: existingUser.role,
       };
@@ -58,7 +57,6 @@ class UserService {
         cellphone: user.cellphone,
         gender: user.gender,
         birthdate: user.birthdate,
-        verified: user.verified,
         picture: user.picture,
         role: user.role,
       };

@@ -6,9 +6,27 @@ import { CustomError } from "../utils/classes/classes";
 class ProfessionalController {
   async getProfessionals(req: Request, res: Response): Promise<void> {
     try {
-      const query = req.query;
-      const professionals = await ProfessionalService.getProfessionals(query);
+      const data = req.body;
+      const professionals = await ProfessionalService.getProfessionals(data);
       res.status(200).json({ professionals });
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.statusCode).json({ error: error.message });
+      } else {
+        res.status(500).json({ success: false, error });
+      }
+    }
+  }
+
+  async getProfessionalsBySpeciality(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      const professionals =
+        await ProfessionalService.getProfessionalsBySpeciality(id);
+      res.status(200).json({ success: true, professionals });
     } catch (error) {
       if (error instanceof CustomError) {
         res.status(error.statusCode).json({ error: error.message });
