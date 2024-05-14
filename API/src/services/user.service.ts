@@ -59,6 +59,7 @@ class UserService {
         birthdate: user.birthdate,
         picture: user.picture,
         role: user.role,
+        email: user.email,
       };
 
       return userProfile;

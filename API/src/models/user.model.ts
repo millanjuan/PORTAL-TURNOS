@@ -11,7 +11,7 @@ export interface IUser extends Document {
   address?: string | null;
   cellphone?: string | null;
   gender?: string | null;
-  birthdate: string;
+  birthdate?: string;
   picture?: string | null;
   role: string;
 }

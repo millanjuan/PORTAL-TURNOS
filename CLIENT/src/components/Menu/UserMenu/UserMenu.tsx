@@ -64,7 +64,7 @@ const UserMenu: React.FC = () => {
           </ListItem>
         </Link>
 
-        <Link to="/appointments" className={styles.link}>
+        <Link to="/my-appointments" className={styles.link}>
           <ListItem>
             <ListItemButton>
               <ListItemIcon>
@@ -75,7 +75,7 @@ const UserMenu: React.FC = () => {
           </ListItem>
         </Link>
 
-        <Link to="/settings" className={styles.link}>
+        <Link to="/account-settings" className={styles.link}>
           <ListItem>
             <ListItemButton>
               <ListItemIcon>

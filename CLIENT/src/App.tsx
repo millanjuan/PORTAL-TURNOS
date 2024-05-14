@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forcedSignInAsync } from "./redux/thunks/authThunk";
 import { RootState } from "./redux/store/store";
+import AccountSettings from "./pages/AccountSettings/AccountSettings";
+import MyAppointments from "./pages/MyAppointments/MyAppointments";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -46,6 +48,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/new-appointment" element={<NewAppointment />} />
+          <Route path="/my-appointments" element={<MyAppointments />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
         </Routes>
       </Layout>
     </>

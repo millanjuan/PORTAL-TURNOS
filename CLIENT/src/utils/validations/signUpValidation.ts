@@ -10,6 +10,11 @@ const isValidPassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
+const isValidName = (name: string): boolean => {
+  const nameRegex = /^[a-zA-Z\s]+$/;
+  return nameRegex.test(name);
+};
+
 const validateSignUp = (userData: ISignUp) => {
   const {
     firstname,
@@ -24,10 +29,16 @@ const validateSignUp = (userData: ISignUp) => {
 
   if (!firstname) {
     registerErrors.firstname = "Firstname is required.";
+  } else if (!isValidName(firstname)) {
+    registerErrors.firstname = "Invalid firstname.";
   }
+
   if (!lastname) {
     registerErrors.lastname = "Lastname is required.";
+  } else if (!isValidName(lastname)) {
+    registerErrors.lastname = "Invalid lastname.";
   }
+
   if (!email) {
     registerErrors.email = "Email is required.";
   } else if (!isValidEmail(email)) {
