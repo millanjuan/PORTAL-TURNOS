@@ -15,6 +15,14 @@ export interface ISignInErrors {
   username: string;
   password: string;
 }
+
+export interface IUpdateErrors {
+  firstname: string;
+  lastname: string;
+  address: string;
+  cellphone: string;
+  birthdate: string;
+}
 export interface ISignUp {
   firstname: string;
   lastname: string;

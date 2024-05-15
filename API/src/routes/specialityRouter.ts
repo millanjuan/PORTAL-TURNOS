@@ -2,7 +2,7 @@ import { Router } from "express";
 import SpecialityController from "../controllers/speciality.controller";
 import { verifyToken, verifyAdmin } from "../middlewares/auth.middlewares";
 import { validateParams } from "../middlewares/user.middlewares";
-import { specialityParams } from "../utils/variables/validation.variables";
+import { specialityParams } from "../utils/constants/validation.constants";
 
 const router = Router();
 

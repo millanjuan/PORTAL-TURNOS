@@ -113,6 +113,9 @@
 
 .logo
  width: 35%
+
+.logo2
+  display: none
 .overlayTitle
   color: white
   font-size: 40px
@@ -122,3 +125,24 @@
   color: white
   margin-top: 20px
   font-size:15px
+
+
+@media(max-width: 768px)
+  .rightContainer
+    display: none
+  
+  .leftContainer
+    width: 100%
+
+  .signInHeader
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%
+
+  .title
+    width: 100%
+
+  .logo2
+    display: block
+    width: 50%

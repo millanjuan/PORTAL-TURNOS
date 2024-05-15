@@ -19,6 +19,8 @@ export const appointmentInitialState: IAppointmentState = {
   dateAppointments: {},
   userAppointments: {},
   appointmentState: "speciality",
+  currentProfessional: "",
+  chosenAppointment: "",
 };
 
 export const specialitiesInitialState: ISpecialityState = {

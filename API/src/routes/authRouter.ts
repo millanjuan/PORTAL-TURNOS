@@ -1,7 +1,7 @@
 import { Router } from "express";
 import AuthController from "../controllers/auth.controller";
 import { validateParams } from "../middlewares/user.middlewares";
-import { authParams } from "../utils/variables/validation.variables";
+import { authParams } from "../utils/constants/validation.constants";
 
 const router = Router();
 

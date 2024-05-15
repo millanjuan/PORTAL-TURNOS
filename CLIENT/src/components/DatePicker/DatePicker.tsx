@@ -1,23 +1,31 @@
 import { useState } from "react";
-import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import styles from "./datePicker.module.sass";
 import { useDispatch, useSelector } from "react-redux";
 import "react-day-picker/dist/style.css";
 import { getAppointmentsByDateAsync } from "../../redux/thunks/appointmentThunk";
+import { RootState } from "../../redux/store/store";
+import { errorAlert } from "../../utils/alerts/alerts";
+import { setApointmentState } from "../../redux/slices/appointmentSlice";
+import { newAppointmentState } from "../../utils/constants/appointmentConstants";
 
 const DatePicker = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState<Date | undefined>(undefined);
-  const [formattedDate, setFormattedDate] = useState<string | undefined>(
-    undefined
+  const professionalId = useSelector(
+    (state: RootState) => state.appointment.currentProfessional
   );
 
-  const handleSelect = async (date: Date | undefined) => {
-    setSelected(date);
-    if (date) {
-      const formatted = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-      await dispatch(getAppointmentsByDateAsync(formatted));
+  const handleSelect = async (current: Date | undefined) => {
+    setSelected(current);
+    if (current) {
+      const date = current.toISOString();
+      const { payload } = await dispatch<any>(
+        getAppointmentsByDateAsync({ date, professionalId })
+      );
+      payload.success
+        ? dispatch(setApointmentState(newAppointmentState.CONFIRM))
+        : errorAlert(payload.error);
     }
   };
 

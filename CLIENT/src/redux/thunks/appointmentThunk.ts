@@ -6,23 +6,19 @@ import {
   IMonthAppointments,
 } from "../../utils/interfaces/appointmentInterface";
 
-const token = localStorage.getItem("token");
-
 export const schuddleAsync = createAsyncThunk(
   "appointment/schuddleAsync",
-  async ({ appointmentId }: IAppointment, { rejectWithValue }) => {
+  async (appointmentId: string, { rejectWithValue }) => {
     try {
-      const config = {
-        params: {
-          appointmentId,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      const token = localStorage.getItem("token");
       const { data } = await axios.put(
         `${import.meta.env.VITE_URL_BACK}/appointment/schuddle`,
-        config
+        { appointmentId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return data;
     } catch (error: any) {
@@ -33,8 +29,9 @@ export const schuddleAsync = createAsyncThunk(
 
 export const cancelAsync = createAsyncThunk(
   "appointment/cancelAsync",
-  async ({ appointmentId, token }: IAppointment, { rejectWithValue }) => {
+  async ({ appointmentId }: IAppointment, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
       const config = {
         params: {
           appointmentId,
@@ -56,8 +53,9 @@ export const cancelAsync = createAsyncThunk(
 
 export const getAppointmentsAsync = createAsyncThunk(
   "appointment/getAppointmentsAsync",
-  async (token: string, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
       const { data } = await axios.get(
         `${import.meta.env.VITE_URL_BACK}/appointment/`,
         {
@@ -80,6 +78,7 @@ export const getAppointmentsByMonthAsync = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
+      const token = localStorage.getItem("token");
       const config = {
         params: {
           year,
@@ -105,6 +104,7 @@ export const getAppointmentsByDateAsync = createAsyncThunk(
   "appointment/getAppointmentsByDateAsync",
   async ({ date, professionalId }: IDateAppointments, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
       const config = {
         params: {
           date,
@@ -132,6 +132,7 @@ export const postMonthlyAppointmentsAsync = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
+      const token = localStorage.getItem("token");
       const config = {
         params: {
           month,

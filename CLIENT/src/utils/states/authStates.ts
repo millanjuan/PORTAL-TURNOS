@@ -3,7 +3,9 @@ import {
   ISignInErrors,
   ISignUp,
   ISignUpErrors,
+  IUpdateErrors,
 } from "../interfaces/authInterface";
+import { IUpdate } from "../interfaces/userInterface";
 
 export const initialRegisterState: ISignUp = {
   firstname: "",
@@ -33,4 +35,12 @@ export const initialLoginState: ISignIn = {
 export const initialLoginErrorState: ISignInErrors = {
   username: "",
   password: "",
+};
+
+export const initialUpdateErrorState: IUpdateErrors = {
+  firstname: "",
+  lastname: "",
+  address: "",
+  cellphone: "",
+  birthdate: "",
 };

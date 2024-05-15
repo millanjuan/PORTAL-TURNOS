@@ -1,16 +1,15 @@
 export interface IAppointment {
   appointmentId: string;
-  token: string;
 }
 
 export interface IMonthAppointments {
-  year: string;
-  month: string;
+  year: number;
+  month: number;
   professionalId: string;
 }
 
 export interface IDateAppointments {
-  date: Date;
+  date: string;
   professionalId: string;
 }
 
@@ -20,4 +19,12 @@ export interface IAppointmentState {
   monthAppointments: Record<string, any>;
   dateAppointments: Record<string, any>;
   appointmentState: string;
+  currentProfessional: string;
+  chosenAppointment: string;
+}
+
+export interface IAppointmentSchuddle {
+  id?: string;
+  _id?: string;
+  startTime: string;
 }

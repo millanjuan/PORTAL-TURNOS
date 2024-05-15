@@ -1,0 +1,40 @@
+.footer
+    display: flex
+    justify-content: center
+    width: 30%
+    gap: 20px
+
+.backButton
+    border-radius: 24px
+    border: 1px solid #0099FA
+    width: 40%
+    padding: 10px 0px
+    color: #0099FA
+    transition: 0.3s ease
+    font-size: 18px
+    &:hover
+        background-color: #0099FA
+        color: white
+
+.continueButton
+    width: 40%
+    background: linear-gradient(180deg, #21BE39 0%, #0F581A 100%)
+    border-radius: 24px
+    color: white
+    font-size: 18px
+    font-weight: 400
+    color: #FCFCFC
+    transition: background 0.3s ease
+    &:hover
+        cursor: pointer
+        background: linear-gradient(180deg, #41D756 0%, #1C7E2D 100%)
+
+.disabledButton
+    width: 40%
+    background-color: grey
+    border-radius: 24px
+    color: white
+    font-size: 18px
+    font-weight: 400
+    color: #FCFCFC
+    cursor: not-allowed

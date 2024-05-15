@@ -22,6 +22,7 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
     initialErrorRegisterState
   );
   const [loginErrors, setLoginErrors] = useState(initialLoginErrorState);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,6 +34,7 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
       ...user,
       [name]: value,
     });
+
     const isRegisterForm = "firstname" in user;
     if (isRegisterForm) {
       setRegisterErrors({
@@ -57,7 +59,9 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
       try {
         const { payload } = await dispatch<any>(signUpAsync(user as ISignUp));
         if (!payload.success) return errorAlert(payload.error);
-        navigate("/home");
+        localStorage.setItem("token", payload.token);
+        localStorage.setItem("expirationTime", payload.expirationTime);
+        navigate("/");
       } catch (error) {
         throw error;
       }
@@ -72,6 +76,10 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
       try {
         const { payload } = await dispatch<any>(signInAsync(user as ISignIn));
         if (!payload.success) return errorAlert(payload.error);
+        await Promise.all([
+          localStorage.setItem("token", payload.token),
+          localStorage.setItem("expirationTime", payload.expirationTime),
+        ]);
         navigate("/");
       } catch (error) {
         throw error;
@@ -80,6 +88,7 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
       setLoginErrors(validationError as ISignInErrors);
     }
   };
+
   return {
     handleChange,
     handleRegister,

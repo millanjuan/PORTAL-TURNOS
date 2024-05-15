@@ -9,3 +9,10 @@ export const signUpFields = [
 ];
 
 export const viteBackUrl = import.meta.env.VITE_URL_BACK;
+
+export const genderOptions = [
+  "Male",
+  "Female",
+  "Non binary",
+  "I prefer not to say",
+];

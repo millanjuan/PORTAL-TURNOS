@@ -31,12 +31,26 @@ class AppointmentController {
 
   async getAppointmentsByMonth(req: Request, res: Response) {
     try {
-      const { year, month, professionalId } = req.body;
+      const { year, month, professionalId } = req.query;
+      const parsedYear =
+        typeof year === "string"
+          ? parseInt(year, 10)
+          : (year as unknown as number);
+      const parsedMonth =
+        typeof month === "string"
+          ? parseInt(month, 10)
+          : (month as unknown as number);
+
+      if (isNaN(parsedYear) || isNaN(parsedMonth)) {
+        throw new CustomError("Invalid year or month", 400);
+      }
+
       const appointments = await AppointmentService.getAppointmentsByMonth(
-        year,
-        month,
-        professionalId
+        parsedYear,
+        parsedMonth,
+        professionalId as string
       );
+
       return res
         .status(200)
         .json({ success: true, appointments: appointments });
@@ -46,18 +60,24 @@ class AppointmentController {
           .status(error.statusCode)
           .json({ success: false, error: error.message });
       } else {
-        res.status(500).json({ success: false, error });
+        res.status(500).json({ success: false, error: error });
       }
     }
   }
 
   async getAppointmentsByDate(req: Request, res: Response) {
     try {
-      const { date, professionalId } = req.body;
+      const { date, professionalId } = req.query;
+      if (!date || !professionalId) {
+        throw new CustomError(appointmentErrors.MISSING_FIELDS, 400);
+      }
+
+      const formattedDate = new Date(date.toString());
       const appointments = await AppointmentService.getAppointmentsByDate(
-        date,
-        professionalId
+        formattedDate,
+        professionalId.toString()
       );
+
       return res
         .status(200)
         .json({ success: true, appointments: appointments });

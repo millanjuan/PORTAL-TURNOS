@@ -1,0 +1,47 @@
+import Swal from "sweetalert2";
+import { clearSchuddle } from "../../../../redux/slices/appointmentSlice";
+import { RootState } from "../../../../redux/store/store";
+import { schuddleAsync } from "../../../../redux/thunks/appointmentThunk";
+import { newAppointmentState } from "../../../../utils/constants/appointmentConstants";
+import styles from "./footerButtons.module.sass";
+import { useSelector, useDispatch } from "react-redux";
+
+const FooterButtons: React.FC = () => {
+  const dispatch = useDispatch();
+  const { appointmentState, chosenAppointment } = useSelector(
+    (state: RootState) => state.appointment
+  );
+  const isFinished: boolean =
+    appointmentState === newAppointmentState.FINISH ? true : false;
+  const handleSchuddle = async (id: string) => {
+    const { payload }: any = await dispatch<any>(schuddleAsync(id));
+    if (payload.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Appointment successfully schuddled",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.close();
+          dispatch(clearSchuddle());
+        }
+      });
+    }
+  };
+
+  return (
+    <footer className={styles.footer}>
+      <button className={styles.backButton}>Back</button>
+      <button
+        className={isFinished ? styles.continueButton : styles.disabledButton}
+        disabled={!isFinished}
+        onClick={() => handleSchuddle(chosenAppointment)}
+      >
+        Schuddle
+      </button>
+    </footer>
+  );
+};
+
+export default FooterButtons;

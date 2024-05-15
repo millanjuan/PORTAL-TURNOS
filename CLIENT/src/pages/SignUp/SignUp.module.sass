@@ -136,3 +136,31 @@
   &:hover
     color: $secondary-color
     cursor: pointer
+
+
+@media(max-width: 768px)
+  .rightContainer
+    display: none
+
+  .leftContainer
+    width: 100%
+
+  .inputContainer
+    width: 100%
+    height: 60px !important
+
+  .input
+    @include inputResponsive(white, $secondary-color, $border-color )
+
+  .errorInput
+    @include inputErrorResponsive(white, $secondary-color, red)
+
+  .errorText
+    font-size: 10px !important
+
+  .select
+    @include selectStylesResponsive(white, $secondary-color, $border-color)
+    
+    
+
+    

@@ -3,4 +3,5 @@ export const newAppointmentState = {
   PROFESSIONAL: "professional",
   DATE: "date",
   CONFIRM: "confirm",
+  FINISH: "finish",
 };

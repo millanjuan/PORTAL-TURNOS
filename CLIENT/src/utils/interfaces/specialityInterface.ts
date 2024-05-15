@@ -7,7 +7,6 @@ export interface INewSpeciality {
   name: string;
   image: string;
   professionals: [];
-  token: string;
 }
 
 export interface IUpdateSpeciality {
@@ -18,7 +17,6 @@ export interface IUpdateSpeciality {
 
 export interface IDeleteSpeciality {
   specialityId: string;
-  token: string;
 }
 
 export interface ISpeciality {

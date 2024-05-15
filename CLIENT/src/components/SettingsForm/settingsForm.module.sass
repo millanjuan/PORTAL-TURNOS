@@ -1,0 +1,103 @@
+@import "../../styles/mixins/mixins"
+@import "../../styles/variables/variables" 
+    
+.mainContainer
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 40px
+    background-color: white
+    width: 100%
+    min-height: 100vh
+    padding: 50px 0px
+    border-radius: 5px
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
+
+.photoContainer
+    display: flex
+    gap: 20px
+
+
+.noPhotoContainer
+    display: flex
+    width: 120px
+    height: 120px
+    border: 3px solid #fff
+    box-shadow: 0 0 13px #0000001a
+    border-radius: 3px
+    gap: 10px
+
+.photoInput
+    font-size: 10px
+    display: flex
+    flex-direction: column
+.icon
+    font-size: 20px
+    font-weight: 600
+
+.buttonEdit
+    cursor: pointer
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 30px
+    height: 30px
+    background-color: #008036
+    box-shadow: 0 0 13px #0000001a
+    transition: all .3s
+    border-radius: 20px
+    color: white
+
+    &:hover
+        background-color: #26b03b
+
+.dataContainer
+    display: flex
+    gap: 20px
+    width: 80%
+
+.textContainer
+    width: 25%
+    display: flex
+    
+
+.fieldName
+    width: 100%
+    text-align: end
+    font-size: 18px
+    color: #6a6f72
+    font-weight: 400
+    
+
+.fieldContainer
+    width: 75%
+    padding-bottom: 10px
+    border-bottom: 1px solid #ddd
+
+.input
+    border: none
+    width: 100%
+    &:focus
+        outline: none
+    
+.uneditable
+    color: gray
+    padding-bottom: 10px
+
+.select
+    width: 100%
+    &:focus
+        outline: none
+
+
+.saveButton
+    @include greenButton
+    width: 100px
+    
+
+.deleteButton
+    color: red
+    height: 30px
+    border-radius: 50%
+    font-size: 20px
+    

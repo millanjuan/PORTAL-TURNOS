@@ -4,4 +4,5 @@ export const appointmentErrors = {
   SCHUDDLE_ERROR: "Error schuddling appointment",
   CANCEL_ERROR: "Error canceling appointment",
   FETCHING_ERROR: "Error fetching appointments",
+  MISSING_FIELDS: "Missing date or professionalId",
 };

@@ -13,6 +13,19 @@ export const errorAlert = (message: string) => {
   });
 };
 
+export const successAlert = (message: string) => {
+  Swal.fire({
+    icon: "success",
+    title: "Success!",
+    text: message,
+    confirmButtonText: "OK",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.close();
+    }
+  });
+};
+
 export const tryAgainAlert = () => {
   Swal.fire({
     icon: "error",

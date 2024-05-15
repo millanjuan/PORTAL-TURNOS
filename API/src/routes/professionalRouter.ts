@@ -2,7 +2,7 @@ import { Router } from "express";
 import { verifyToken, verifyAdmin } from "../middlewares/auth.middlewares";
 import ProfessionalController from "../controllers/professional.controller";
 import { validateParams } from "../middlewares/user.middlewares";
-import { professionalParams } from "../utils/variables/validation.variables";
+import { professionalParams } from "../utils/constants/validation.constants";
 
 const router = Router();
 

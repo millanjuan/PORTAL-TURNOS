@@ -14,29 +14,33 @@ import MyAppointments from "./pages/MyAppointments/MyAppointments";
 
 const App = () => {
   const token = localStorage.getItem("token");
+  const expirationTime = localStorage.getItem("expirationTime");
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.auth.userData);
 
-  const getUserData = async (token: string) => {
+  const getUserData = async () => {
     try {
-      await dispatch<any>(forcedSignInAsync(token));
+      await dispatch<any>(forcedSignInAsync());
     } catch (error) {
       console.log(error);
       throw error;
     }
   };
   useEffect(() => {
+    if (token && expirationTime && new Date() > new Date(expirationTime)) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("expirationTime");
+      navigate("/signin");
+    }
     if (
       !token &&
       location.pathname !== "/signup" &&
       location.pathname !== "/signin"
     )
       navigate("/signin");
-    if (token && !userData) {
-      getUserData(token);
-    }
+    token && !userData && getUserData();
   }, []);
 
   return (

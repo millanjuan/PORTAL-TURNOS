@@ -1,5 +1,6 @@
 import styles from "./signIn.module.sass";
 import logo from "../../assets/images/logoWhite.png";
+import logo2 from "../../assets/images/logoBlack.png";
 import useAuth from "../../hooks/useAuth";
 import { initialLoginState } from "../../utils/states/authStates";
 
@@ -11,7 +12,11 @@ const SignIn: React.FC = () => {
       <div className={styles.leftContainer}>
         <div className={styles.formContainer}>
           <form className={styles.signInForm}>
-            <h2 className={styles.title}>Sign In</h2>
+            <div className={styles.signInHeader}>
+              <img src={logo2} alt="logo2" className={styles.logo2} />
+              <h2 className={styles.title}>Sign In</h2>
+            </div>
+
             <div className={styles.inputContainer}>
               <input
                 type="text"

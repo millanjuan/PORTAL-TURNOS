@@ -4,6 +4,7 @@ import {
   signUpAsync,
   signInAsync,
   forcedSignInAsync,
+  updateUserAsync,
 } from "../thunks/authThunk";
 
 const authSlice = createSlice({
@@ -23,8 +24,6 @@ const authSlice = createSlice({
       .addCase(signUpAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.userData = action.payload.user;
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("expirationTime", action.payload.expirationTime);
       })
       .addCase(signUpAsync.rejected, (state) => {
         state.loading = false;
@@ -49,6 +48,16 @@ const authSlice = createSlice({
         state.userData = action.payload.profile;
       })
       .addCase(forcedSignInAsync.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateUserAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userData = action.payload.user;
+      })
+      .addCase(updateUserAsync.rejected, (state) => {
         state.loading = false;
       });
   },

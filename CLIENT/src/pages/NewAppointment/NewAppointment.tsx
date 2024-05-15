@@ -5,9 +5,10 @@ import { newAppointmentState } from "../../utils/constants/appointmentConstants"
 import SpecialitySelect from "./Renders/SpecialitySelect/SpecialitySelect";
 import ProfessionalSelect from "./Renders/ProfessionalSelect/ProfessionalSelect";
 import Confirm from "./Renders/Confirm/Confirm";
-import CalendarPicker from "../../components/CalendarPicker/CalendarPicker";
 import { useEffect } from "react";
 import { setApointmentState } from "../../redux/slices/appointmentSlice";
+import DateSelect from "./Renders/DateSelect/DateSelect";
+import FooterButtons from "./Renders/FooterButtons/FooterButtons";
 
 const NewAppointment = () => {
   const dispatch = useDispatch();
@@ -24,13 +25,57 @@ const NewAppointment = () => {
         return <SpecialitySelect />;
 
       case newAppointmentState.PROFESSIONAL:
-        return <ProfessionalSelect />;
+        return (
+          <>
+            <ProfessionalSelect />
+            <FooterButtons />
+          </>
+        );
 
       case newAppointmentState.DATE:
-        return <CalendarPicker />;
+        return (
+          <>
+            <ProfessionalSelect />
+            <div className={styles.confirmContainer}>
+              <div className={styles.leftContainer}>
+                <DateSelect />
+              </div>
+              <div className={styles.rightContainer}></div>
+            </div>
+            <FooterButtons />
+          </>
+        );
 
       case newAppointmentState.CONFIRM:
-        return <Confirm />;
+        return (
+          <>
+            <ProfessionalSelect />
+            <div className={styles.confirmContainer}>
+              <div className={styles.leftContainer}>
+                <DateSelect />
+              </div>
+              <div className={styles.rightContainer}>
+                <Confirm />
+              </div>
+            </div>
+            <FooterButtons />
+          </>
+        );
+      case newAppointmentState.FINISH:
+        return (
+          <>
+            <ProfessionalSelect />
+            <div className={styles.confirmContainer}>
+              <div className={styles.leftContainer}>
+                <DateSelect />
+              </div>
+              <div className={styles.rightContainer}>
+                <Confirm />
+              </div>
+            </div>
+            <FooterButtons />
+          </>
+        );
       default:
         break;
     }

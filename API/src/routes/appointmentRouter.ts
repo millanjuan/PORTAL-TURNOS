@@ -2,7 +2,7 @@ import { Router } from "express";
 import { verifyAdmin, verifyToken } from "../middlewares/auth.middlewares";
 import AppointmentController from "../controllers/appointment.controller";
 import { validateParams } from "../middlewares/user.middlewares";
-import { appointmentParams } from "../utils/variables/validation.variables";
+import { appointmentParams } from "../utils/constants/validation.constants";
 
 const router = Router();
 
@@ -19,15 +19,9 @@ router.get(
   "/month",
   verifyToken,
   verifyAdmin,
-  validateParams(appointmentParams.appointment),
   AppointmentController.getAppointmentsByMonth
 );
-router.get(
-  "/date",
-  verifyToken,
-  validateParams(appointmentParams.date),
-  AppointmentController.getAppointmentsByDate
-);
+router.get("/date", verifyToken, AppointmentController.getAppointmentsByDate);
 router.put(
   "/schuddle",
   verifyToken,

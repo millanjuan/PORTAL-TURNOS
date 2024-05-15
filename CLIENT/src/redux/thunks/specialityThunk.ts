@@ -6,11 +6,12 @@ import {
   IUpdateSpeciality,
 } from "../../utils/interfaces/specialityInterface";
 import { viteBackUrl } from "../../utils/constants/constants";
-const token = localStorage.getItem("token");
+
 export const getSpecialitiesAsync = createAsyncThunk(
   "speciality/getSpecialitiesAsync",
   async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
       const { data } = await axios.get(`${viteBackUrl}/speciality/`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,9 +27,10 @@ export const getSpecialitiesAsync = createAsyncThunk(
 export const newSpecialityAsync = createAsyncThunk(
   "speciality/newSpecialityAsync",
   async (
-    { name, image, professionals, token }: INewSpeciality,
+    { name, image, professionals }: INewSpeciality,
     { rejectWithValue }
   ) => {
+    const token = localStorage.getItem("token");
     const config = {
       params: {
         name,
@@ -57,14 +59,13 @@ export const updateSpeciality = createAsyncThunk(
     {
       specialityId,
       data,
-      token,
     }: {
       specialityId: string;
       data: IUpdateSpeciality;
-      token: string;
     },
     { rejectWithValue }
   ) => {
+    const token = localStorage.getItem("token");
     const config = {
       params: {
         data,
@@ -87,8 +88,9 @@ export const updateSpeciality = createAsyncThunk(
 
 export const deleteSpecialityAsync = createAsyncThunk(
   "speciality/delete",
-  async ({ specialityId, token }: IDeleteSpeciality, { rejectWithValue }) => {
+  async ({ specialityId }: IDeleteSpeciality, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
       const { data } = await axios.delete(
         `${viteBackUrl}/speciality/${specialityId}`,
         {

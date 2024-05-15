@@ -12,7 +12,7 @@ import {
   START_MINUTES,
   END_MINUTES,
   WEEKDAYS,
-} from "../utils/variables/appointment.variable";
+} from "../utils/constants/appointment.constants";
 
 class AppointmentService {
   async createMonthlyAppointments({
@@ -104,6 +104,7 @@ class AppointmentService {
       const appointments = await Appointment.find({
         date: { $gte: startDate, $lte: endDate },
         professional: professionalId,
+        active: false,
       });
 
       if (appointments && appointments.length > 0) {

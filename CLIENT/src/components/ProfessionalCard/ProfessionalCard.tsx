@@ -1,5 +1,14 @@
+import { getAppointmentsByMonthAsync } from "../../redux/thunks/appointmentThunk";
 import { IProfessionalCardProps } from "../../utils/interfaces/professionalInterface";
 import styles from "./ProfessionalCard.module.sass";
+import { useDispatch } from "react-redux";
+import { getMonth, getYear } from "date-fns";
+import { newAppointmentState } from "../../utils/constants/appointmentConstants";
+import {
+  setApointmentState,
+  setCurrentProfessional,
+} from "../../redux/slices/appointmentSlice";
+import { errorAlert } from "../../utils/alerts/alerts";
 
 const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
   id,
@@ -7,8 +16,27 @@ const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
   lastname,
   image,
 }) => {
+  const dispatch = useDispatch();
+  const handleSetDateSelect = async (
+    professionalId: string,
+    state: string,
+    id: string
+  ) => {
+    const currentDate = new Date();
+    const month = getMonth(currentDate);
+    const year = getYear(currentDate);
+    const { payload } = await dispatch<any>(
+      getAppointmentsByMonthAsync({ year, month, professionalId })
+    );
+    dispatch(setApointmentState(state));
+    dispatch(setCurrentProfessional(id));
+    !payload.success && errorAlert(payload.error);
+  };
   return (
-    <div className={styles.cardContainer}>
+    <div
+      className={styles.cardContainer}
+      onClick={() => handleSetDateSelect(id, newAppointmentState.DATE, id)}
+    >
       <img src={image} alt="image" className={styles.image} />
       <p className={styles.name}>
         {firstname} {lastname}
