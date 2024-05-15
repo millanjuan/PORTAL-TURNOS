@@ -21,6 +21,7 @@ export interface IAppointmentState {
   appointmentState: string;
   currentProfessional: string;
   chosenAppointment: string;
+  currentSpeciality: string;
 }
 
 export interface IAppointmentSchuddle {

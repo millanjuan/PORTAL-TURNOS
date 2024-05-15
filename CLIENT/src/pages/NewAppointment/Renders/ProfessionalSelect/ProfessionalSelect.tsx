@@ -7,9 +7,14 @@ const ProfessionalSelect: React.FC = () => {
   const professionals = useSelector(
     (state: RootState) => state.professional.professionals
   );
+  const speciality = useSelector(
+    (state: RootState) => state.appointment.currentSpeciality
+  );
   return (
     <div className={styles.mainContainer}>
-      <h3 className={styles.title}>Select any available doctor</h3>
+      <h3 className={styles.title}>
+        Select any available doctor for: {speciality}
+      </h3>
       <ProfessionalCards professionals={professionals as []} />
     </div>
   );

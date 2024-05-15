@@ -9,7 +9,7 @@ import { errorAlert } from "../../utils/alerts/alerts";
 import { setApointmentState } from "../../redux/slices/appointmentSlice";
 import { newAppointmentState } from "../../utils/constants/appointmentConstants";
 
-const DatePicker = () => {
+const DatePicker: React.FC = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState<Date | undefined>(undefined);
   const professionalId = useSelector(

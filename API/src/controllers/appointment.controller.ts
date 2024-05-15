@@ -141,8 +141,12 @@ class AppointmentController {
       if (!userId) {
         throw new CustomError(userErrors.ID_ERROR, 400);
       }
-      const appointments = await appointmentService.getUserAppointments(userId);
-      res.status(200).json({ success: true, appointments: appointments });
+      const { activeAppointments, inactiveAppointments } =
+        await appointmentService.getUserAppointments(userId);
+      res.status(200).json({
+        success: true,
+        appointments: { activeAppointments, inactiveAppointments },
+      });
     } catch (error) {
       if (error instanceof CustomError) {
         res

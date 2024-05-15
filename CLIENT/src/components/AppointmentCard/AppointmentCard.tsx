@@ -1,4 +1,3 @@
-import React from "react";
 import { getHourFromDate } from "../../utils/functions/functions";
 import styles from "./appointmentCard.module.sass";
 import { IAppointmentSchuddle } from "../../utils/interfaces/appointmentInterface";

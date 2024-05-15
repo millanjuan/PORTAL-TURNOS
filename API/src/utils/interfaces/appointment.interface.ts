@@ -8,3 +8,8 @@ export interface ISchuddleAppointment {
   userId?: string;
   appointmentId: string;
 }
+
+export interface IUserAppointments {
+  activeAppointments: {};
+  inactiveAppointments: {};
+}

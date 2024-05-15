@@ -1,6 +1,7 @@
 import {
   IMonthlyAppointments,
   ISchuddleAppointment,
+  IUserAppointments,
 } from "../utils/interfaces/appointment.interface";
 import { Appointment, IAppointment } from "../models/appointment.model";
 import { CustomError } from "../utils/classes/classes";
@@ -166,13 +167,23 @@ class AppointmentService {
     }
   }
 
-  async getUserAppointments(userId: string): Promise<any[]> {
+  async getUserAppointments(userId: string): Promise<IUserAppointments> {
     try {
-      const appointments = await Appointment.find({ user: userId });
-      if (!appointments) {
+      const currentDate = new Date();
+      const activeAppointments = await Appointment.find({
+        user: userId,
+        active: true,
+        date: { $gte: startOfDay(currentDate) },
+      });
+      const inactiveAppointments = await Appointment.find({
+        user: userId,
+        active: false,
+        date: { $lt: startOfDay(currentDate) },
+      });
+      if (!activeAppointments || !inactiveAppointments) {
         throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
-      return appointments;
+      return { activeAppointments, inactiveAppointments };
     } catch (error) {
       throw error;
     }

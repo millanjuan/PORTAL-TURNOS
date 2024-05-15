@@ -1,7 +1,7 @@
 import { getAppointmentsByMonthAsync } from "../../redux/thunks/appointmentThunk";
 import { IProfessionalCardProps } from "../../utils/interfaces/professionalInterface";
 import styles from "./ProfessionalCard.module.sass";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMonth, getYear } from "date-fns";
 import { newAppointmentState } from "../../utils/constants/appointmentConstants";
 import {
@@ -9,6 +9,7 @@ import {
   setCurrentProfessional,
 } from "../../redux/slices/appointmentSlice";
 import { errorAlert } from "../../utils/alerts/alerts";
+import { RootState } from "../../redux/store/store";
 
 const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
   id,
@@ -17,6 +18,10 @@ const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
   image,
 }) => {
   const dispatch = useDispatch();
+  const actualId = useSelector(
+    (state: RootState) => state.appointment.currentProfessional
+  );
+  const isActual = actualId === id;
   const handleSetDateSelect = async (
     professionalId: string,
     state: string,
@@ -34,7 +39,7 @@ const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
   };
   return (
     <div
-      className={styles.cardContainer}
+      className={isActual ? styles.actualCard : styles.cardContainer}
       onClick={() => handleSetDateSelect(id, newAppointmentState.DATE, id)}
     >
       <img src={image} alt="image" className={styles.image} />

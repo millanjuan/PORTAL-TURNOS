@@ -3,6 +3,7 @@ import { appointmentInitialState } from "../initialStates/states";
 import {
   getAppointmentsByDateAsync,
   getAppointmentsByMonthAsync,
+  getUserAppointmentsAsync,
   schuddleAsync,
 } from "../thunks/appointmentThunk";
 
@@ -12,6 +13,9 @@ const appointmentSlice = createSlice({
   reducers: {
     setApointmentState: (state, action) => {
       state.appointmentState = action.payload;
+    },
+    setCurrentSpeciality: (state, action) => {
+      state.currentSpeciality = action.payload;
     },
     setCurrentProfessional: (state, action) => {
       state.currentProfessional = action.payload;
@@ -55,6 +59,16 @@ const appointmentSlice = createSlice({
       })
       .addCase(schuddleAsync.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(getUserAppointmentsAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserAppointmentsAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userAppointments = action.payload.appointments;
+      })
+      .addCase(getUserAppointmentsAsync.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
@@ -63,5 +77,6 @@ export const {
   setCurrentProfessional,
   clearSchuddle,
   setChosenAppointment,
+  setCurrentSpeciality,
 } = appointmentSlice.actions;
 export default appointmentSlice.reducer;

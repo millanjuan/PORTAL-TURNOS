@@ -153,3 +153,22 @@ export const postMonthlyAppointmentsAsync = createAsyncThunk(
     }
   }
 );
+export const getUserAppointmentsAsync = createAsyncThunk(
+  "appointment/getUserAppointmentsAsync",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_URL_BACK}/appointment/date`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

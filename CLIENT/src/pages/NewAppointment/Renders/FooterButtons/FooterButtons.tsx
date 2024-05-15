@@ -30,9 +30,15 @@ const FooterButtons: React.FC = () => {
     }
   };
 
+  const handleBack = () => {
+    dispatch(clearSchuddle());
+  };
+
   return (
     <footer className={styles.footer}>
-      <button className={styles.backButton}>Back</button>
+      <button className={styles.backButton} onClick={() => handleBack()}>
+        Back
+      </button>
       <button
         className={isFinished ? styles.continueButton : styles.disabledButton}
         disabled={!isFinished}

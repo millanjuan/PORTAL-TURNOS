@@ -8,7 +8,7 @@ import { genderOptions } from "../../utils/constants/constants";
 import { IUpdate } from "../../utils/interfaces/userInterface";
 import useUpdate from "../../hooks/useUpdate";
 
-const SettingsForm = () => {
+const SettingsForm: React.FC = () => {
   const { userData, loading } = useSelector((state: RootState) => state.auth);
 
   const initialUpdateState: IUpdate = {
