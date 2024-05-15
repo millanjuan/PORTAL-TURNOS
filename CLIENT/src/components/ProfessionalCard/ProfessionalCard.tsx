@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { getAppointmentsByMonthAsync } from "../../redux/thunks/appointmentThunk";
 import { IProfessionalCardProps } from "../../utils/interfaces/professionalInterface";
 import styles from "./ProfessionalCard.module.sass";
@@ -22,6 +23,13 @@ const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
     (state: RootState) => state.appointment.currentProfessional
   );
   const isActual = actualId === id;
+  const [isHidden, setIsHidden] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsHidden(false), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleSetDateSelect = async (
     professionalId: string,
     state: string,
@@ -37,9 +45,12 @@ const ProfessionalCard: React.FC<IProfessionalCardProps> = ({
     dispatch(setCurrentProfessional(id));
     !payload.success && errorAlert(payload.error);
   };
+
   return (
     <div
-      className={isActual ? styles.actualCard : styles.cardContainer}
+      className={`${isActual ? styles.actualCard : styles.cardContainer} ${
+        isHidden ? styles.hidden : ""
+      }`}
       onClick={() => handleSetDateSelect(id, newAppointmentState.DATE, id)}
     >
       <img src={image} alt="image" className={styles.image} />

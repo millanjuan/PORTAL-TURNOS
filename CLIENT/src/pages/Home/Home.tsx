@@ -1,16 +1,25 @@
 import styles from "./home.module.sass";
 import ActiveAppointments from "../../components/ActiveAppointments/ActiveAppointments";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [isHidden, setIsHidden] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsHidden(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
   const handleNavigate = (path: string) => {
     navigate(path);
   };
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContainer}>
-        <header className={styles.content}>
+        <header
+          className={`${styles.content} ${isHidden ? styles.hidden : ""}`}
+        >
           <h1 className={styles.title}>Book Your Doctor Appointment Online.</h1>
           <div>
             <p className={styles.text}>Schedule Your Appointment!</p>
@@ -27,7 +36,7 @@ const Home: React.FC = () => {
             </button>
             <button
               className={styles.appointmentsButton}
-              onClick={() => handleNavigate("/new-appointment")}
+              onClick={() => handleNavigate("/my-appointments")}
             >
               My Appointments
             </button>

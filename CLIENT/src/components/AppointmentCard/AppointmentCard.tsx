@@ -1,4 +1,3 @@
-import { getHourFromDate } from "../../utils/functions/functions";
 import styles from "./appointmentCard.module.sass";
 import { IAppointmentSchuddle } from "../../utils/interfaces/appointmentInterface";
 import {
@@ -21,7 +20,7 @@ const AppointmentCard: React.FC<IAppointmentSchuddle> = ({ id, startTime }) => {
     await dispatch<any>(setApointmentState(newAppointmentState.FINISH));
   };
 
-  const formattedStart = getHourFromDate(startTime);
+  const formattedStart = startTime.slice(11, 16);
 
   return (
     <button

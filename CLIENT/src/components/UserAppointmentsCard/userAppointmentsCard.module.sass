@@ -9,6 +9,13 @@
     border-radius: 8px
     box-shadow: 3px 5px 11px 0px #3D58610F, 10px 18px 21px 0px #3D58610D, 23px 41px 28px 0px #3D586108, 40px 73px 33px 0px #3D586103, 63px 114px 36px 0px #3D586100
     width: 100%
+    opacity: 1
+    transform: translateY(0)
+    transition: opacity 0.3s ease, transform 0.3s ease
+
+    &.hidden
+        opacity: 0
+        transform: translateY(20px)
 
 .title
     color:#838383

@@ -17,41 +17,12 @@ const specialitySlice = createSlice({
         state.specialities = action.payload.specialities;
         state.loading = false;
       })
-      .addMatcher(
-        (action) =>
-          [
-            getSpecialitiesAsync.pending,
-            updateSpeciality.pending,
-            newSpecialityAsync.pending,
-            deleteSpecialityAsync.pending,
-          ].includes(action.type),
-        (state) => {
-          state.loading = true;
-        }
-      )
-      .addMatcher(
-        (action) =>
-          [
-            updateSpeciality.fulfilled,
-            newSpecialityAsync.fulfilled,
-            deleteSpecialityAsync.fulfilled,
-          ].includes(action.type),
-        (state) => {
-          state.loading = false;
-        }
-      )
-      .addMatcher(
-        (action) =>
-          [
-            getSpecialitiesAsync.rejected,
-            updateSpeciality.rejected,
-            newSpecialityAsync.rejected,
-            deleteSpecialityAsync.rejected,
-          ].includes(action.type),
-        (state) => {
-          state.loading = false;
-        }
-      );
+      .addCase(getSpecialitiesAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSpecialitiesAsync.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 

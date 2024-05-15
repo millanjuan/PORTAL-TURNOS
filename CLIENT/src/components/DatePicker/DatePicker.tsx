@@ -9,7 +9,7 @@ import { errorAlert } from "../../utils/alerts/alerts";
 import { setApointmentState } from "../../redux/slices/appointmentSlice";
 import { newAppointmentState } from "../../utils/constants/appointmentConstants";
 
-const DatePicker: React.FC = () => {
+const DatePicker = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState<Date | undefined>(undefined);
   const professionalId = useSelector(
@@ -17,6 +17,9 @@ const DatePicker: React.FC = () => {
   );
 
   const handleSelect = async (current: Date | undefined) => {
+    const currentDate = new Date();
+    if (current && current <= currentDate) return errorAlert("Invalid date");
+
     setSelected(current);
     if (current) {
       const date = current.toISOString();

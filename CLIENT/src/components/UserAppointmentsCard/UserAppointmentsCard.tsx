@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { IUserAppointment } from "../../utils/interfaces/appointmentInterface";
 import styles from "./userAppointmentsCard.module.sass";
 import {
@@ -25,6 +25,11 @@ const UserAppointmentsCard: React.FC<IUserAppointment> = ({
   speciality,
 }) => {
   const dispatch = useDispatch();
+  const [isHidden, setIsHidden] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsHidden(false), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const handleCancelAppointment = async (id: string) => {
     try {
       const { payload } = await dispatch<any>(cancelAsync(id));
@@ -35,7 +40,7 @@ const UserAppointmentsCard: React.FC<IUserAppointment> = ({
     }
   };
   return (
-    <div className={styles.cardContainer}>
+    <div className={`${styles.cardContainer} ${isHidden ? styles.hidden : ""}`}>
       <h2 className={styles.title}>Appointment Date</h2>
       <header className={styles.header}>
         <p className={styles.dateText}>{formatDate(date, 0, 10)}</p>
