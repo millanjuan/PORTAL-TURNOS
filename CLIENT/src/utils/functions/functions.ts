@@ -8,3 +8,7 @@ export const getHourFromDate = (dateTimeString: string): string => {
   const timeString = dateObj.toTimeString().slice(0, 5);
   return timeString;
 };
+
+export const formatDate = (date: string, n1: number, n2: number) => {
+  return date.slice(n1, n2);
+};

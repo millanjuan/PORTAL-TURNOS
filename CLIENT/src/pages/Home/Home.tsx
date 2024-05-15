@@ -1,6 +1,12 @@
 import styles from "./home.module.sass";
+import ActiveAppointments from "../../components/ActiveAppointments/ActiveAppointments";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContainer}>
@@ -13,16 +19,25 @@ const Home: React.FC = () => {
             </p>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.bookButton}>Book An Appointment</button>
-            <button className={styles.appointmentsButton}>
+            <button
+              className={styles.bookButton}
+              onClick={() => handleNavigate("/new-appointment")}
+            >
+              Book An Appointment
+            </button>
+            <button
+              className={styles.appointmentsButton}
+              onClick={() => handleNavigate("/new-appointment")}
+            >
               My Appointments
             </button>
           </div>
         </header>
       </div>
-      <body className={styles.body}>
+      <div className={styles.body}>
         <h2 className={styles.subTitle}>My Next Appointments</h2>
-      </body>
+        <ActiveAppointments />
+      </div>
     </div>
   );
 };

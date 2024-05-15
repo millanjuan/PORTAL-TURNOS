@@ -11,6 +11,7 @@ import { forcedSignInAsync } from "./redux/thunks/authThunk";
 import { RootState } from "./redux/store/store";
 import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import MyAppointments from "./pages/MyAppointments/MyAppointments";
+import { getUserAppointmentsAsync } from "./redux/thunks/appointmentThunk";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -23,6 +24,7 @@ const App = () => {
   const getUserData = async () => {
     try {
       await dispatch<any>(forcedSignInAsync());
+      await dispatch<any>(getUserAppointmentsAsync());
     } catch (error) {
       console.log(error);
       throw error;

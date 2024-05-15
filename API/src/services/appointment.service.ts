@@ -174,16 +174,37 @@ class AppointmentService {
         user: userId,
         active: true,
         date: { $gte: startOfDay(currentDate) },
-      });
+      })
+        .populate({
+          path: "professional",
+          model: "Professional",
+          populate: {
+            path: "speciality",
+            model: "Speciality",
+          },
+        })
+        .exec();
+
       const inactiveAppointments = await Appointment.find({
         user: userId,
         active: false,
         date: { $lt: startOfDay(currentDate) },
-      });
+      })
+        .populate({
+          path: "professional",
+          model: "Professional",
+          populate: {
+            path: "speciality",
+            model: "Speciality",
+          },
+        })
+        .exec();
+
       if (!activeAppointments || !inactiveAppointments) {
         throw new CustomError(appointmentErrors.NOT_FOUND, 404);
       }
-      return { activeAppointments, inactiveAppointments };
+
+      return { activeAppointments, inactiveAppointments } as IUserAppointments;
     } catch (error) {
       throw error;
     }

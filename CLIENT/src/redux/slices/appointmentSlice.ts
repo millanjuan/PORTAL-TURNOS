@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { appointmentInitialState } from "../initialStates/states";
 import {
+  cancelAsync,
   getAppointmentsByDateAsync,
   getAppointmentsByMonthAsync,
   getUserAppointmentsAsync,
@@ -65,9 +66,21 @@ const appointmentSlice = createSlice({
       })
       .addCase(getUserAppointmentsAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.userAppointments = action.payload.appointments;
+        state.userActiveAppointments =
+          action.payload.appointments.activeAppointments;
+        state.userInactiveAppointments =
+          action.payload.appointments.inactiveAppointments;
       })
       .addCase(getUserAppointmentsAsync.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(cancelAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(cancelAsync.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(cancelAsync.rejected, (state) => {
         state.loading = false;
       });
   },

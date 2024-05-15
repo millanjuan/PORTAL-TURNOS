@@ -1,3 +1,6 @@
+import { IAppointment } from "../../models/appointment.model";
+import { ISpeciality } from "../../models/speciality.model";
+import { IProfessional } from "../../models/professional.model";
 export interface IMonthlyAppointments {
   month: number;
   year: number;
@@ -10,6 +13,12 @@ export interface ISchuddleAppointment {
 }
 
 export interface IUserAppointments {
-  activeAppointments: {};
-  inactiveAppointments: {};
+  activeAppointments: (IAppointment & {
+    professional: IProfessional;
+    speciality: ISpeciality;
+  })[];
+  inactiveAppointments: (IAppointment & {
+    professional: IProfessional;
+    speciality: ISpeciality;
+  })[];
 }

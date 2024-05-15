@@ -1,7 +1,10 @@
 import Swal from "sweetalert2";
 import { clearSchuddle } from "../../../../redux/slices/appointmentSlice";
 import { RootState } from "../../../../redux/store/store";
-import { schuddleAsync } from "../../../../redux/thunks/appointmentThunk";
+import {
+  getUserAppointmentsAsync,
+  schuddleAsync,
+} from "../../../../redux/thunks/appointmentThunk";
 import { newAppointmentState } from "../../../../utils/constants/appointmentConstants";
 import styles from "./footerButtons.module.sass";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +19,7 @@ const FooterButtons: React.FC = () => {
   const handleSchuddle = async (id: string) => {
     const { payload }: any = await dispatch<any>(schuddleAsync(id));
     if (payload.success) {
+      await dispatch<any>(getUserAppointmentsAsync());
       Swal.fire({
         icon: "success",
         title: "Success",

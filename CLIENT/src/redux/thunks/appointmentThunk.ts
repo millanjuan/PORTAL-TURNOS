@@ -29,20 +29,17 @@ export const schuddleAsync = createAsyncThunk(
 
 export const cancelAsync = createAsyncThunk(
   "appointment/cancelAsync",
-  async ({ appointmentId }: IAppointment, { rejectWithValue }) => {
+  async (appointmentId: string, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const config = {
-        params: {
-          appointmentId,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
       const { data } = await axios.put(
         `${import.meta.env.VITE_URL_BACK}/appointment/cancel`,
-        config
+        { appointmentId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return data;
     } catch (error: any) {
@@ -159,7 +156,7 @@ export const getUserAppointmentsAsync = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.get(
-        `${import.meta.env.VITE_URL_BACK}/appointment/date`,
+        `${import.meta.env.VITE_URL_BACK}/appointment`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
