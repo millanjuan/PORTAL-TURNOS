@@ -15,12 +15,7 @@ router
     AppointmentController.createMonthlyAppointments
   )
   .get(verifyToken, AppointmentController.getUserAppointments);
-router.get(
-  "/month",
-  verifyToken,
-  verifyAdmin,
-  AppointmentController.getAppointmentsByMonth
-);
+router.get("/month", verifyToken, AppointmentController.getAppointmentsByMonth);
 router.get("/date", verifyToken, AppointmentController.getAppointmentsByDate);
 router.put(
   "/schuddle",

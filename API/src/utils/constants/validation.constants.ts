@@ -1,12 +1,12 @@
 export const authParams = {
   register: [
     "email",
-    "email",
     "password",
     "firstname",
     "lastname",
     "identity",
     "typeidentity",
+    "birthdate",
   ],
   login: ["email", "password"],
 };

@@ -34,7 +34,11 @@ const UserMenu: React.FC = () => {
   const DrawerList = (
     <div className={styles.menuContainer} onClick={toggleDrawer(false)}>
       {userData?.picture ? (
-        <img src={userData.picture} alt="profile-picture" />
+        <img
+          src={userData.picture}
+          alt="profile-picture"
+          className={styles.picture}
+        />
       ) : (
         <div className={styles.letterContainer}>
           <p className={styles.letter}>{letter}</p>

@@ -13,45 +13,13 @@
     border-radius: 5px
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
 
-.photoContainer
-    display: flex
-    gap: 20px
 
-
-.noPhotoContainer
-    display: flex
-    width: 120px
-    height: 120px
-    border: 3px solid #fff
-    box-shadow: 0 0 13px #0000001a
-    border-radius: 3px
-    gap: 10px
-
-.photoInput
-    font-size: 10px
-    display: flex
-    flex-direction: column
-.icon
-    font-size: 20px
-    font-weight: 600
-
-.buttonEdit
-    cursor: pointer
-    display: flex
-    align-items: center
-    justify-content: center
-    width: 30px
-    height: 30px
-    background-color: #008036
-    box-shadow: 0 0 13px #0000001a
-    transition: all .3s
-    border-radius: 20px
-    color: white
-
-    &:hover
-        background-color: #26b03b
 
 .dataContainer
+    display: flex
+    gap: 20px
+    width: 80%
+.dataContainer1
     display: flex
     gap: 20px
     width: 80%
@@ -59,6 +27,46 @@
 .textContainer
     width: 25%
     display: flex
+
+.photoContainer
+    width: 74%
+
+.notEditable
+    display: flex
+    gap: 0px
+
+.pictureContainer
+    width: 40%
+    display: flex
+    gap: 10px
+
+.editablePhoto
+    width: 40%
+    display: flex
+    gap: 10px
+
+.editButton
+    color: white
+    background-color: #0b7423
+    width: 100%
+    align-self: center
+    border-radius: 15px
+    padding: 6px 10px
+    transition: 0.3s ease
+    &:hover
+        background-color: #09521a
+
+.cancelButton
+    color: white
+    background-color: #fc564a
+    width: 40%
+    align-self: center
+    border-radius: 15px
+    padding: 6px 10px
+    transition: 0.3s ease
+    &:hover
+        background-color: red
+
     
 
 .fieldName
@@ -67,7 +75,13 @@
     font-size: 18px
     color: #6a6f72
     font-weight: 400
-    
+
+.fieldName1
+    width: 100%
+    text-align: end
+    font-size: 18px
+    color: #6a6f72
+    font-weight: 400
 
 .fieldContainer
     width: 75%
@@ -101,3 +115,67 @@
     border-radius: 50%
     font-size: 20px
     
+
+.icon
+    color: green
+    font-size: 25px
+
+.iconCancel
+    color: red
+    font-size: 25px
+
+.avatarContainer
+    width: 40%
+    display: flex
+    gap: 10px
+
+.avatar
+    width: 40%
+
+@media(max-width: 1100px)
+    .cancelButton
+        width: 80%
+@media(max-width: 560px)
+    .dataContainer
+        width: 100%
+        justify-content: center
+        padding: 0px 10px
+    .dataContainer1
+        flex-direction: column
+        align-items: center
+        width: 100%
+        
+    .fieldName
+        font-size: 15px
+        text-align: center
+    .fieldName1
+        text-align: center
+
+    .fieldContainer
+        font-size: 13px
+        width: 100%
+    .icon
+        font-size: 15px
+
+    .iconCancel
+        font-size: 15px
+
+    .editablePhoto
+        display: flex
+        flex-direction: column
+    .notEditable    
+        justify-content: center
+        align-items: center
+    .pictureContainer
+        display: flex
+        flex-direction: column
+    .cancelButton
+        width: 100%
+    .fieldContainer1
+        font-size: 20px
+        width: 100%
+    .photoContainer
+        justify-content: center
+    .textContainer
+        width: 100%
+

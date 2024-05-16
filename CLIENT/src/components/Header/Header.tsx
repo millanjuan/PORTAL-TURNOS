@@ -34,6 +34,9 @@ const Header: React.FC = () => {
           Log out
         </button>
       </div>
+      <div className={styles.menu}>
+        <UserMenu />
+      </div>
     </header>
   );
 };

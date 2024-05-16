@@ -38,3 +38,17 @@ export const tryAgainAlert = () => {
     }
   });
 };
+
+export const updateSwal = () => {
+  Swal.fire({
+    title: "Success!",
+    text: "Data successfuly updated.",
+    icon: "success",
+    showCancelButton: false,
+    confirmButtonText: "Ok",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.reload();
+    }
+  });
+};

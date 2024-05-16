@@ -13,6 +13,7 @@ import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import MyAppointments from "./pages/MyAppointments/MyAppointments";
 import { getUserAppointmentsAsync } from "./redux/thunks/appointmentThunk";
 import Restore from "./pages/Restore/Restore";
+import NotFound from "./pages/404/NotFound";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/new-appointment" element={<NewAppointment />} />
           <Route path="/my-appointments" element={<MyAppointments />} />
           <Route path="/account-settings" element={<AccountSettings />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Layout>
     </>

@@ -58,11 +58,12 @@ const useAuth = (initialState: ISignUp | ISignIn) => {
     if (Object.keys(validationError).length === 0) {
       try {
         const { payload } = await dispatch<any>(signUpAsync(user as ISignUp));
-        if (!payload.success) return errorAlert(payload.error);
+        if (!payload.success) console.log(payload);
         localStorage.setItem("token", payload.token);
         localStorage.setItem("expirationTime", payload.expirationTime);
         navigate("/");
       } catch (error) {
+        console.error(error);
         throw error;
       }
     } else {

@@ -7,26 +7,46 @@ import profile from "../../assets/images/profilePicture.jpg";
 import { genderOptions } from "../../utils/constants/constants";
 import { IUpdate } from "../../utils/interfaces/userInterface";
 import useUpdate from "../../hooks/useUpdate";
+import Avatar from "react-avatar-edit";
+import { useState } from "react";
+import { FaPencil } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
 
 const SettingsForm: React.FC = () => {
   const { userData, loading } = useSelector((state: RootState) => state.auth);
-
   const initialUpdateState: IUpdate = {
-    address: userData?.address || "",
-    cellphone: userData?.cellphone || "",
-    gender: userData?.gender || "Male",
-    birthdate: userData?.birthdate || "",
-    picture: userData?.picture || "",
+    address: userData?.address,
+    cellphone: userData?.cellphone,
+    gender: userData?.gender,
+    picture: userData?.picture,
+  };
+  const [editableFields, setEditableFields] = useState({
+    address: false,
+    cellphone: false,
+    gender: false,
+  });
+
+  const handleEditField = (fieldName: string) => {
+    setEditableFields({
+      ...editableFields,
+      [fieldName]: true,
+    });
+  };
+  const handleCancelEdit = (fieldName: string) => {
+    setEditableFields((prevFields) => ({
+      ...prevFields,
+      [fieldName]: false,
+    }));
   };
 
   const {
     handleChange,
     handleUpdateUser,
-    handleEditBirthdate,
     handleImageChange,
-    handleImageRemove,
+    handleCancelClickPhoto,
+    handleEditPhoto,
+    editablePhoto,
     user,
-    editableBirthdate,
   } = useUpdate(initialUpdateState);
 
   if (loading) {
@@ -39,39 +59,45 @@ const SettingsForm: React.FC = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.dataContainer}>
+      <div className={styles.dataContainer1}>
         <div className={styles.textContainer}>
-          <p className={styles.fieldName}>Profile picture</p>
+          <p className={styles.fieldName1}>Profile picture</p>
         </div>
         <div className={styles.photoContainer}>
-          {user.picture ? (
-            <div className={styles.noPhotoContainer}>
-              <img
-                src={URL.createObjectURL(user.picture as any)}
-                alt="profile-picture"
-                className={styles.avatar}
-              />
-              <button
-                className={styles.deleteButton}
-                onClick={handleImageRemove}
-              >
-                X
-              </button>
+          {!editablePhoto ? (
+            <div className={styles.notEditable}>
+              {userData.picture ? (
+                <div className={styles.pictureContainer}>
+                  <img src={userData.picture} alt="profile" />
+                  <button
+                    className={styles.editButton}
+                    onClick={handleEditPhoto}
+                  >
+                    Edit
+                  </button>
+                </div>
+              ) : (
+                <div className={styles.avatarContainer}>
+                  <img src={profile} alt="avatar" className={styles.avatar} />
+                  <button
+                    className={styles.editButton}
+                    onClick={handleEditPhoto}
+                  >
+                    Edit
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
-            <>
-              <div className={styles.noPhotoContainer}>
-                <img src={profile} alt="avatar" className={styles.avatar} />
-              </div>
-              <div className={styles.buttonsContainer}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className={styles.photoInput}
-                  onChange={handleImageChange}
-                />
-              </div>
-            </>
+            <div className={styles.editablePhoto}>
+              <Avatar width={200} height={200} onCrop={handleImageChange} />
+              <button
+                className={styles.cancelButton}
+                onClick={handleCancelClickPhoto}
+              >
+                Cancel
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -110,65 +136,112 @@ const SettingsForm: React.FC = () => {
           <p className={styles.fieldName}>Address</p>
         </div>
         <div className={styles.fieldContainer}>
-          <input
-            name="address"
-            placeholder="Enter your address"
-            value={user.address}
-            className={styles.input}
-            onChange={handleChange}
-          />
+          {editableFields.address ? (
+            <input
+              name="address"
+              placeholder={"Enter your address"}
+              value={user.address}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{userData.address}</p>
+          )}
         </div>
+        {!editableFields.address ? (
+          <button
+            className={styles.edit}
+            onClick={() => handleEditField("address")}
+          >
+            <FaPencil className={styles.icon} />
+          </button>
+        ) : (
+          <button
+            className={styles.edit}
+            onClick={() => handleCancelEdit("address")}
+          >
+            <MdCancel className={styles.iconCancel} />
+          </button>
+        )}
       </div>
       <div className={styles.dataContainer}>
         <div className={styles.textContainer}>
           <p className={styles.fieldName}>Cellphone</p>
         </div>
         <div className={styles.fieldContainer}>
-          <input
-            name="cellphone"
-            placeholder="Enter your cellphone"
-            value={user.cellphone}
-            className={styles.input}
-            onChange={handleChange}
-          />
+          {editableFields.cellphone ? (
+            <input
+              name="cellphone"
+              placeholder={"Enter your cellphone"}
+              value={user.cellphone}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{userData.cellphone}</p>
+          )}
         </div>
+        {!editableFields.cellphone ? (
+          <button
+            className={styles.edit}
+            onClick={() => handleEditField("cellphone")}
+          >
+            <FaPencil className={styles.icon} />
+          </button>
+        ) : (
+          <button
+            className={styles.edit}
+            onClick={() => handleCancelEdit("cellphone")}
+          >
+            <MdCancel className={styles.iconCancel} />
+          </button>
+        )}
       </div>
       <div className={styles.dataContainer}>
         <div className={styles.textContainer}>
           <p className={styles.fieldName}>Gender</p>
         </div>
         <div className={styles.fieldContainer}>
-          <select
-            name="gender"
-            value={user.gender}
-            className={styles.select}
-            onChange={handleChange}
-          >
-            {genderOptions.map((gender) => (
-              <option key={gender} value={gender}>
-                {gender}
-              </option>
-            ))}
-          </select>
+          {editableFields.gender ? (
+            <select
+              name="gender"
+              value={user.gender}
+              className={styles.select}
+              onChange={handleChange}
+            >
+              {genderOptions.map((gender) => (
+                <option key={gender} value={gender}>
+                  {gender}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p>{userData.gender}</p>
+          )}
         </div>
+        {!editableFields.gender ? (
+          <button
+            className={styles.edit}
+            onClick={() => handleEditField("gender")}
+          >
+            <FaPencil className={styles.icon} />
+          </button>
+        ) : (
+          <button
+            className={styles.edit}
+            onClick={() => handleCancelEdit("gender")}
+          >
+            <MdCancel className={styles.iconCancel} />
+          </button>
+        )}
       </div>
+
       <div className={styles.dataContainer}>
         <div className={styles.textContainer}>
           <p className={styles.fieldName}>Birthdate</p>
         </div>
         <div className={styles.fieldContainer}>
-          {userData.birthdate ? (
-            <p>{userData.birthdate}</p>
-          ) : (
-            <input
-              type="date"
-              name="birthdate"
-              placeholder="Birthdate"
-              value={user.birthdate as any}
-              className={styles.input}
-              onChange={handleChange}
-            />
-          )}
+          <p className={styles.uneditable}>{userData.birthdate}</p>
         </div>
       </div>
       <div className={styles.dataContainer}>
