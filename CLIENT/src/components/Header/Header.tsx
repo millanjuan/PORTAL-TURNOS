@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store/store";
 import UserMenu from "../Menu/UserMenu/UserMenu";
 import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
+import useMenu from "../../hooks/useMenu";
 
 const Header: React.FC = () => {
   const userData = useSelector((state: RootState) => state.auth.userData);
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
     userData?.firstname && capitalizeFirstLetter(userData.firstname);
   const capitalizedLastname =
     userData?.lastname && capitalizeFirstLetter(userData.lastname);
+  const { handleLogOut } = useMenu();
 
   return (
     <header className={styles.header}>
@@ -28,7 +30,9 @@ const Header: React.FC = () => {
         <p className={styles.fullname}>
           {capitalizedName} {capitalizedLastname}
         </p>
-        <button className={styles.logOutButton}>Log out</button>
+        <button className={styles.logOutButton} onClick={handleLogOut}>
+          Log out
+        </button>
       </div>
     </header>
   );

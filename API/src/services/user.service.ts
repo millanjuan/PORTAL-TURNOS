@@ -40,7 +40,6 @@ class UserService {
         select: {
           email: 0,
           password: 0,
-          username: 0,
         },
       });
 

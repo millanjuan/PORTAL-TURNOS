@@ -1,6 +1,9 @@
 import { IAppointmentState } from "../../utils/interfaces/appointmentInterface";
 import { IAuthState } from "../../utils/interfaces/authInterface";
-import { IProfessionalState } from "../../utils/interfaces/professionalInterface";
+import {
+  IProfessionalState,
+  IRestoreState,
+} from "../../utils/interfaces/professionalInterface";
 import { ISpecialityState } from "../../utils/interfaces/specialityInterface";
 import { IUserState } from "../../utils/interfaces/userInterface";
 
@@ -34,4 +37,10 @@ export const professionalInitialState: IProfessionalState = {
   loading: false,
   professionals: <any>[],
   total: null,
+};
+
+export const restoreInitialState: IRestoreState = {
+  id: "",
+  loading: false,
+  status: "email",
 };

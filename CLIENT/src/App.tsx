@@ -12,12 +12,13 @@ import { RootState } from "./redux/store/store";
 import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import MyAppointments from "./pages/MyAppointments/MyAppointments";
 import { getUserAppointmentsAsync } from "./redux/thunks/appointmentThunk";
+import Restore from "./pages/Restore/Restore";
 
 const App = () => {
   const token = localStorage.getItem("token");
   const expirationTime = localStorage.getItem("expirationTime");
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.auth.userData);
 
@@ -38,8 +39,9 @@ const App = () => {
     }
     if (
       !token &&
-      location.pathname !== "/signup" &&
-      location.pathname !== "/signin"
+      pathname !== "/signup" &&
+      pathname !== "/signin" &&
+      pathname !== "/restore"
     )
       navigate("/signin");
     token && !userData && getUserData();
@@ -52,6 +54,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/restore" element={<Restore />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/new-appointment" element={<NewAppointment />} />
           <Route path="/my-appointments" element={<MyAppointments />} />

@@ -2,12 +2,16 @@ import styles from "./home.module.sass";
 import ActiveAppointments from "../../components/ActiveAppointments/ActiveAppointments";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getUserAppointmentsAsync } from "../../redux/thunks/appointmentThunk";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState(true);
 
   useEffect(() => {
+    dispatch<any>(getUserAppointmentsAsync());
     const timer = setTimeout(() => setIsHidden(false), 500);
     return () => clearTimeout(timer);
   }, []);

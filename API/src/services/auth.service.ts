@@ -15,7 +15,6 @@ class AuthService {
   async createUser(userData: IUser) {
     const {
       email,
-      username,
       password,
       firstname,
       lastname,
@@ -25,23 +24,15 @@ class AuthService {
       role,
     } = userData;
     try {
-      const existingUser = await User.findOne({
-        $or: [{ email }, { username }],
-      });
+      const existingUser = await User.findOne({ email });
 
-      if (existingUser) {
-        if (existingUser.email === email) {
-          throw new CustomError(authErrors.EMAIL_EXISTS, 409);
-        } else {
-          throw new CustomError(authErrors.USER_EXISTS, 409);
-        }
-      }
+      if (existingUser && existingUser.email === email)
+        throw new CustomError(authErrors.EMAIL_EXISTS, 409);
 
       const hashedPassword = bcryptjs.hashSync(password, 10);
 
       const newUser = new User({
         email: email.toLowerCase(),
-        username,
         password: hashedPassword,
         firstname: firstname.toLowerCase(),
         lastname: lastname.toLowerCase(),
@@ -54,7 +45,6 @@ class AuthService {
       const payload: Partial<IUser> = {
         _id: newUser._id,
         email: newUser.email,
-        username: newUser.username,
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         identity: newUser.identity,
@@ -73,9 +63,9 @@ class AuthService {
     }
   }
 
-  async validateUser(username: string, password: string) {
+  async validateUser(email: string, password: string) {
     try {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ email });
 
       if (!user || !bcryptjs.compareSync(password, user.password)) {
         throw new CustomError(authErrors.INVALID_CREDENTIALS, 401);
@@ -84,7 +74,6 @@ class AuthService {
       const payload: Partial<IUser> = {
         _id: user._id,
         email: user.email,
-        username: user.username,
         firstname: user.firstname,
         lastname: user.lastname,
         identity: user.identity,

@@ -58,16 +58,15 @@ const SignUp: React.FC = () => {
             </div>
             <div className={styles.inputContainer}>
               <input
-                type="text"
-                name="username"
-                placeholder="Username"
+                type="date"
+                name="birthdate"
                 onChange={handleChange}
                 className={
-                  registerErrors.username ? styles.errorInput : styles.input
+                  registerErrors.birthdate ? styles.errorInput : styles.input
                 }
               />
-              {registerErrors.username && (
-                <p className={styles.errorText}>{registerErrors.username}</p>
+              {registerErrors.birthdate && (
+                <p className={styles.errorText}>{registerErrors.birthdate}</p>
               )}
             </div>
             <div className={styles.inputContainer}>

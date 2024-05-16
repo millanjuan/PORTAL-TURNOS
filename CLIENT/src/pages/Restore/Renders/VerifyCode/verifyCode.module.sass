@@ -1,0 +1,37 @@
+// Variables
+@import "../../../../styles/mixins/mixins"
+//Mixins
+@import "../../../../styles/variables/variables"   
+
+
+.formContainer
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 90%
+    
+.verifyForm
+  display: flex
+  flex-direction: column
+  width: 90%
+  background-color: white
+  border-radius: 8px
+  background-color: #F0F0F0
+
+.title
+  color: $primary-color
+  margin: 20px 0px
+  font-size: 30px
+  font-weight: 300
+  border-bottom: 1px solid $primary-color
+
+.inputContainer
+    width: 100%
+    height: 70px
+
+.input
+    @include inputStyles(white, $secondary-color, $border-color)
+
+.button
+  @include greenButton
+  margin-top: 10px

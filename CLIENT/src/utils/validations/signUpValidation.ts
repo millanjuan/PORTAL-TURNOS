@@ -1,5 +1,10 @@
 import { ISignUp } from "../interfaces/authInterface";
 
+const isValidDate = (date: string): boolean => {
+  const dateRegex = /^(19[3-9]\d|200\d|2010)-\d{2}-\d{2}$/;
+  return dateRegex.test(date);
+};
+
 const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -20,7 +25,7 @@ const validateSignUp = (userData: ISignUp) => {
     firstname,
     lastname,
     email,
-    username,
+    birthdate,
     password,
     password2,
     identity,
@@ -45,10 +50,10 @@ const validateSignUp = (userData: ISignUp) => {
     registerErrors.email = "Invalid email.";
   }
 
-  if (!username) {
-    registerErrors.username = "Username is required.";
-  } else if (username.length < 6 || username.length > 20) {
-    registerErrors.username = "Username must be between 6 and 20 characters.";
+  if (!birthdate) {
+    registerErrors.birthdate = "Birthdate is required.";
+  } else if (!isValidDate(birthdate)) {
+    registerErrors.birthdate = "Invalid birthdate.";
   }
 
   if (!password || !password2) {

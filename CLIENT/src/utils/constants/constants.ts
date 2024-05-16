@@ -1,4 +1,4 @@
-export const routesWithoutHeader = ["/signin", "/signup"];
+export const routesWithoutHeader = ["/signin", "/signup", "/restore"];
 export const signUpFields = [
   "firstname",
   "lastname",
@@ -16,3 +16,10 @@ export const genderOptions = [
   "Non binary",
   "I prefer not to say",
 ];
+
+export const restoreStates = {
+  EMAIL: "email",
+  VERIFY: "verify",
+  PASSWORD: "password",
+  SUCCESS: "success",
+};

@@ -25,9 +25,9 @@ class AuthController {
     }
   }
   async validateUser(req: Request, res: Response) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      const authData = await AuthService.validateUser(username, password);
+      const authData = await AuthService.validateUser(email, password);
       res.status(200).json({ success: true, ...authData });
     } catch (error) {
       if (error instanceof CustomError) {

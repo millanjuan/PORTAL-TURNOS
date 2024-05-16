@@ -3,10 +3,14 @@ import authReducer from "../slices/authSlice";
 import appointmentReducer from "../slices/appointmentSlice";
 import specialitiesReducer from "../slices/specialitySlice";
 import professionalReducer from "../slices/professionalSlice";
+import restoreReducer from "../slices/restoreSlice";
 import { IAuthState } from "../../utils/interfaces/authInterface";
 import { IAppointmentState } from "../../utils/interfaces/appointmentInterface";
 import { ISpecialityState } from "../../utils/interfaces/specialityInterface";
-import { IProfessionalState } from "../../utils/interfaces/professionalInterface";
+import {
+  IProfessionalState,
+  IRestoreState,
+} from "../../utils/interfaces/professionalInterface";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +18,7 @@ export const store = configureStore({
     appointment: appointmentReducer,
     speciality: specialitiesReducer,
     professional: professionalReducer,
+    restore: restoreReducer,
   },
 });
 
@@ -22,6 +27,7 @@ export type RootState = {
   appointment: IAppointmentState;
   speciality: ISpecialityState;
   professional: IProfessionalState;
+  restore: IRestoreState;
 };
 
 export type AppDispatch = typeof store.dispatch;

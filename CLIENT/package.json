@@ -11,9 +11,6 @@
     "build:styles": "sass src/index.scss src/index.css"
   },
   "dependencies": {
-    "@headlessui/react": "^2.0.3",
-    "@heroicons/react": "^1.0.6",
-    "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
     "@reduxjs/toolkit": "2.2.4",
     "axios": "^1.6.8",

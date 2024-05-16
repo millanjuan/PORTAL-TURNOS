@@ -1,14 +1,14 @@
 export const authParams = {
   register: [
     "email",
-    "username",
+    "email",
     "password",
     "firstname",
     "lastname",
     "identity",
     "typeidentity",
   ],
-  login: ["username", "password"],
+  login: ["email", "password"],
 };
 
 export const appointmentParams = {

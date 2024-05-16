@@ -25,11 +25,6 @@
   font-weight: 300
   border-bottom: 1px solid $primary-color
 
-.formContainer
-  display: flex
-  align-items: center
-  justify-content: center
-
 
 .formContainer
   display: flex
@@ -37,7 +32,7 @@
   justify-content: center
   width: 90%
 
-.signInForm
+.restoreForm
   display: flex
   flex-direction: column
   width: 90%
@@ -64,33 +59,6 @@
   margin-top: 10px
 
 
-.footer
-  display: flex
-  flex-direction: column
-  gap: 5px
-  margin-top: 30px
-  width: 100%
-  align-self: center
-  gap: 20px
-
-.footer p
-  font-size: 14px
-
-
-.footer strong 
-  font-size: 14px
-  transition: color 0.3s ease
-
-  &:hover
-    color: $secondary-color
-    cursor: pointer
-.signUpLinkContainer
-  display: flex
-  gap: 10px
-
-.restoreContainer
-  display: flex
-  gap: 10px
 
 .rightContainer
   display: flex
@@ -136,7 +104,14 @@
   color: white
   margin-top: 20px
   font-size:15px
+.errorInput
+  @include inputErrorStyles(white, $secondary-color, red)
+      
 
+.errorText
+  font-size: 15px
+  color: red
+  max-width: 100%
 
 @media(max-width: 768px)
   .rightContainer
@@ -145,7 +120,7 @@
   .leftContainer
     width: 100%
 
-  .signInHeader
+  .restoreHeader
     display: flex
     flex-direction: column
     align-items: center

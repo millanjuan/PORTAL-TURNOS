@@ -20,15 +20,13 @@ const SignIn: React.FC = () => {
             <div className={styles.inputContainer}>
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="email"
+                placeholder="Email"
                 onChange={handleChange}
-                className={
-                  loginErrors.username ? styles.errorInput : styles.input
-                }
+                className={loginErrors.email ? styles.errorInput : styles.input}
               />
-              {loginErrors.username && (
-                <p className={styles.errorText}>{loginErrors.username}</p>
+              {loginErrors.email && (
+                <p className={styles.errorText}>{loginErrors.email}</p>
               )}
             </div>
             <div className={styles.inputContainer}>
@@ -53,8 +51,18 @@ const SignIn: React.FC = () => {
               Sign in
             </button>
             <footer className={styles.footer}>
-              <p>Don't have an account? </p>
-              <strong onClick={() => handleNavigate("/signup")}>Sign up</strong>
+              <div className={styles.signUpLinkContainer}>
+                <p>Don't have an account? </p>
+                <strong onClick={() => handleNavigate("/signup")}>
+                  Sign up
+                </strong>
+              </div>
+              <div className={styles.restoreContainer}>
+                <p>Forgot password?</p>
+                <strong onClick={() => handleNavigate("/restore")}>
+                  Restore it
+                </strong>
+              </div>
             </footer>
           </form>
         </div>

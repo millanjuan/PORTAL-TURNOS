@@ -7,7 +7,7 @@ import { generateVerificationCode } from "../utils/functions/functions";
 import bcryptjs from "bcryptjs";
 
 class RestoreService {
-  async generateCode(email: string, credential: string) {
+  async generateCode(email: string) {
     try {
       const user = await User.findOne({ email });
       if (!user) {
@@ -20,7 +20,6 @@ class RestoreService {
       const verificationCode = new VerificationCode({
         code,
         expirationDate,
-        credential,
         user: user._id,
       });
       await verificationCode.save();
@@ -30,9 +29,9 @@ class RestoreService {
     }
   }
 
-  async verifyCode(credential: string, code: string): Promise<string> {
+  async verifyCode(code: string): Promise<string> {
     try {
-      const codeMatch = await VerificationCode.findOne({ code, credential });
+      const codeMatch = await VerificationCode.findOne({ code });
       if (!codeMatch) {
         throw new CustomError(restoreErrors.INVALID_CODE, 400);
       }
@@ -56,20 +55,6 @@ class RestoreService {
       }
       const newPassword = bcryptjs.hashSync(password, 10);
       user.password = newPassword;
-      await user.save();
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async usernameRestore(id: string, username: string): Promise<void> {
-    try {
-      const user = await User.findById(id);
-      if (!user) {
-        throw new CustomError(restoreErrors.USER_NOT, 404);
-      }
-
-      user.username = username;
       await user.save();
     } catch (error) {
       throw error;

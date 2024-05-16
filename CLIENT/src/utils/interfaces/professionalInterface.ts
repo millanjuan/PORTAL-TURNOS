@@ -26,3 +26,9 @@ export interface IProfessional2 {
   lastname: string;
   image: string;
 }
+
+export interface IRestoreState {
+  id: string;
+  loading: boolean;
+  status: string;
+}

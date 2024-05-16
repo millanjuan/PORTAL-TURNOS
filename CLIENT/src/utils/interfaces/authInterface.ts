@@ -7,12 +7,12 @@ export interface ISignUpErrors {
   firstname: string;
   lastname: string;
   email: string;
-  username: string;
   password: string;
   identity: string;
+  birthdate: string;
 }
 export interface ISignInErrors {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -27,7 +27,7 @@ export interface ISignUp {
   firstname: string;
   lastname: string;
   email: string;
-  username: string;
+  birthdate: string;
   password: string;
   password2: string;
   typeidentity: string;
@@ -35,7 +35,7 @@ export interface ISignUp {
 }
 
 export interface ISignIn {
-  username: string;
+  email: string;
   password: string;
 }
 
